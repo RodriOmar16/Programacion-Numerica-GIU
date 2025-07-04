@@ -1,1 +1,1 @@
-# Programaci-n-Num-rica-GIU
+# Programacion-Numerica-GIU
