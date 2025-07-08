@@ -7,22 +7,36 @@ public class MetodoController {
 	//Atributos
 	private Funcion funcion;
 	private List<String[]> matriz, matrizAitken;
-	private String error;
+	private String error, columnas[];
 	
 	//Constructor
 	public MetodoController(String func) {
 		this.funcion = new Funcion(func);
 		this.matriz  = new ArrayList<>();
+		this.error   = "";
 	}
 	
 	//Getters
 	public String getFuncion() { return this.funcion.getFuncion(); }
 	public String getError() { return this.error; }
-	public List<String[]> getMatriz(){ return this.matriz; }
+	public String[] getColumnas() { return this.columnas; }
+	public String[][] getMatriz(){
+		int filas = this.matriz.size(),
+			colum = this.matriz.get(0).length;
+		
+		String [][]datos = new String[filas][colum];
+		for(int i=0; i<filas ;i++) {
+			for(int j=0; j<colum ;j++) {
+				datos[i][j] = this.matriz.get(i)[j];
+			}
+		}
+		
+		return datos; 
+	}
 	public List<String[]> getMatrizAitken(){ return this.matrizAitken; }
 	
 	//Methods
-	public double calcular(int metodo, int inicial, int b, int epsilon) {
+	public double calcular(int metodo, double inicial, double b, double epsilon) {
 		double resultado = 0;
 		switch(metodo) {
 			//métodos cerrados
@@ -42,6 +56,7 @@ public class MetodoController {
 		
 		int i = 0,j,k;
 		double an=100, an1 = 0, x0, x1, x2;
+		this.columnas = new String[] {"i", "xn", "xn+1", "xn+2", "aitken"};
 		do {
 			an = an1;
 			j = i + 1;
@@ -64,12 +79,13 @@ public class MetodoController {
 		//reseteo
 		this.matriz.clear();
 
-		int t = 14, i = 0;// n = 0; m = 0;
+		int t = 25, i = 0;// n = 0; m = 0;
 		
 		double  fa = this.funcion.evaluar(a),
 				c = (a+b)/2,
 				fc = funcion.evaluar(c),
 				fb = funcion.evaluar(b);
+		this.columnas = new String[] {"i", "a", "fa", "b", "fb", "c", "fc"};
 		
 		this.matriz.add(new String[] {String.valueOf(i),String.valueOf(a), String.valueOf(fa),String.valueOf(b),String.valueOf(fb),String.valueOf(c), String.valueOf(fc)});
 		
@@ -86,8 +102,8 @@ public class MetodoController {
 			i++;
 			this.matriz.add(new String[] {String.valueOf(i),String.valueOf(a), String.valueOf(fa),String.valueOf(b),String.valueOf(fb),String.valueOf(c), String.valueOf(fc)});
 		}
-		if(i >= 14) {
-			System.out.println("Se superó el límite de iteraciones.!!");
+		if(i >= t) {
+			this.error = "Se superó el límite de iteraciones.";
 		}
 		return c;
 	}
@@ -101,7 +117,7 @@ public class MetodoController {
 				fb = funcion.evaluar(b),
 				c  = (a*fb - b*fa)/(fb - fa),
 				fc = funcion.evaluar(c);
-		
+		this.columnas = new String[] {"i", "a", "fa", "b", "fb", "c", "fc"};
 		this.matriz.add(new String[] {String.valueOf(i),String.valueOf(a), String.valueOf(fa),String.valueOf(b),String.valueOf(fb),String.valueOf(c), String.valueOf(fc)});
 		
 		while(Math.abs(fc)>epsilon && i<t) {
@@ -133,6 +149,7 @@ public class MetodoController {
 				c  = (a*fb-b*fa)/(fb-fa),
 				fc = funcion.evaluar(c);
 		
+		this.columnas = new String[] {"i", "a", "fa", "b", "fb", "c", "fc"};
 		this.matriz.add(new String[] {String.valueOf(i),String.valueOf(a), String.valueOf(fa),String.valueOf(b),String.valueOf(fb),String.valueOf(c), String.valueOf(fc)});
 		
 		while(Math.abs(fc)>epsilon && i<t) {
