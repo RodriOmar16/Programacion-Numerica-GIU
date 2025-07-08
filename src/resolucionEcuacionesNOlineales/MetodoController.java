@@ -11,9 +11,9 @@ public class MetodoController {
 	
 	//Constructor
 	public MetodoController(String func) {
-		this.funcion = new Funcion(func);
-		this.matriz  = new ArrayList<>();
-		this.error   = "";
+		this.funcion      = new Funcion(func);
+		this.matriz       = new ArrayList<>();
+		this.error        = "";
 	}
 	
 	//Getters
@@ -33,7 +33,19 @@ public class MetodoController {
 		
 		return datos; 
 	}
-	public List<String[]> getMatrizAitken(){ return this.matrizAitken; }
+	public String[][] getMatrizAitken(){
+		int filas = this.matrizAitken.size(),
+				colum = this.matrizAitken.get(0).length;
+			
+			String [][]datos = new String[filas][colum];
+			for(int i=0; i<filas ;i++) {
+				for(int j=0; j<colum ;j++) {
+					datos[i][j] = this.matrizAitken.get(i)[j];
+				}
+			}
+			
+			return datos; 
+	}
 	
 	//Methods
 	public double calcular(int metodo, double inicial, double b, double epsilon) {
@@ -43,8 +55,14 @@ public class MetodoController {
 			case 1 -> resultado = biseccion(inicial, b, epsilon);
 			case 2 -> resultado = regulaFalsi(inicial, b, epsilon);
 			case 3 -> resultado = regulaFalsiModificada(inicial, b, epsilon);
-			//métodos abiertos
 			case 4 -> resultado = secante(inicial, b, epsilon);
+		}
+		return resultado;
+	}
+	public double calcular(int metodo, double inicial, double epsilon) {
+		double resultado = 0;
+		switch(metodo) {
+			//métodos abiertos
 			case 5 -> resultado = newtonRaphson(inicial,epsilon);
 			case 6 -> resultado = puntoFijo(epsilon);
 			case 7 -> resultado = convergenciaCubica(inicial,epsilon);
@@ -67,12 +85,12 @@ public class MetodoController {
 			an1 = x0 - (Math.pow((x1 - x0),2) - (x2 - 2*x1 + x0));
 			//System.out.println("an1: "+ an1);
 			
-			this.matriz.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
+			this.matrizAitken.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
 			
 			i++;
 		}while(i < (this.matriz.size()-2) && Math.abs(an1- an) > epsilon);
 		//System.out.println("an1: "+ an1);
-		this.matriz.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
+		this.matrizAitken.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
 		return an1;
 	}
 	private double biseccion(double a, double b, double epsilon) {
@@ -172,7 +190,7 @@ public class MetodoController {
 			i++;
 			this.matriz.add(new String[] {String.valueOf(i),String.valueOf(a), String.valueOf(fa),String.valueOf(b),String.valueOf(fb),String.valueOf(c), String.valueOf(fc)});
 		}
-		mostrasTabla();
+		//mostrasTabla();
 		return c;
 	}
 	private double secante(double a, double b, double epsilon) {
@@ -185,6 +203,7 @@ public class MetodoController {
 			   fx1 = funcion.evaluar(x1);
 		
 		this.matriz.add(new String[] {String.valueOf(i),String.valueOf(x0),String.valueOf(fx0),String.valueOf(x1), String.valueOf(fx1),String.valueOf(xMas1)});
+		this.columnas = new String[] {"i", "xn", "f(xn)", "xn+1", "f(xn+1)", "xn+2"};
 		
 		while(Math.abs(x1-x0) > epsilon/* && i<t*/) {
 			xMas1 = (x0*fx1 - x1*fx0)/(fx1 - fx0);
@@ -198,7 +217,7 @@ public class MetodoController {
 			x1 = xMas1; 
 			fx1 = funcion.evaluar(x1);
 		}
-		mostrasTabla();
+		//mostrasTabla();
 		return xMas1;
 	}
 	private double newtonRaphson(double valInicial, double epsilon) {
@@ -214,6 +233,8 @@ public class MetodoController {
         
         this.funcion.derivar();
         Funcion derivada = new Funcion(this.funcion.getDerivada(1));
+        
+        this.columnas = new String[] {"i", "xn", "xn+1", "f(xn)","f'(xn)", "|xn+1 - xn|"};
         
         do{
         	//System.out.println("i: "+i+"	"+xMas1);
@@ -243,9 +264,12 @@ public class MetodoController {
 		
 		double xi, xiMas1 = 1; //valor inicial
 		int i = 0;
+		
+		this.columnas = new String[] {"i", "xn", "xn+1", "|xn+1 - xn|"};
+		
 		do {
 			xi = xiMas1;
-			System.out.println("i: "+i+"	xi: "+xi);
+			//System.out.println("i: "+i+"	xi: "+xi);
 			this.matriz.add(new String[] {String.valueOf(i),String.valueOf(xi),String.valueOf(xiMas1),String.valueOf(Math.abs(xiMas1 - xi))});
 		
 			xiMas1 = this.funcion.evaluar(xi);
@@ -270,13 +294,24 @@ public class MetodoController {
         double xn, xn1=a, fxn, fpxn, fpsxn;
         int i=0;
         
+        this.columnas = new String[] {"i", "xn", "f(xn)","f'(xn)","f''(xn)" ,"|xn+1 - xn|"};
+     
         do {
         	xn = xn1;
         	
         	fxn   = this.funcion.evaluar(xn);
+        	if(this.funcion.getError().length() > 0) {
+        		System.out.println(this.funcion.getError());
+        	}
         	fpxn  = derivada.evaluar(xn);
+        	if(derivada.getError().length() > 0) {
+        		System.out.println(derivada.getError());
+        	}
         	fpsxn = derivada2da.evaluar(xn);
- 
+        	if(derivada2da.getError().length() > 0) {
+        		System.out.println(derivada2da.getError());
+        	}
+        	
         	xn1 = xn - (2*fxn*fpxn)/((2*Math.pow(fpxn, 2))-(fxn * fpsxn));
 
         	this.matriz.add(new String[] {String.valueOf(i),String.valueOf(xn),String.valueOf(fxn), String.valueOf(fpxn), String.valueOf(fpsxn),String.valueOf(Math.abs(xn1 - xn))});

@@ -172,7 +172,6 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		panelTabla.setMaximumSize(new Dimension(Integer.MAX_VALUE, panelTabla.getPreferredSize().height));
 	}
 	private void completarTabla() {
-		System.out.println("Llego al método");
 		String[][] datos = controllerMetodo.getMatriz();
 		String[] columnas = controllerMetodo.getColumnas();
 		
@@ -182,7 +181,6 @@ public class CalculadoraMetodos_GIU extends JFrame{
             //sinDatos.setFont(new Font("SansSerif", Font.ITALIC, 14));
             //add(sinDatos, BorderLayout.CENTER);
         } else {
-        	System.out.println("Entro");
             this.tabla = new JTable(datos, columnas);
             DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
             derecha.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -195,13 +193,11 @@ public class CalculadoraMetodos_GIU extends JFrame{
             this.tabla.setFillsViewportHeight(true);
 
             this.panelTabla.add(this.scrollTabla);
-            //this.tabla.setRowHeight(24); // Altura por fila
             this.tabla.setFont(new Font("SansSerif", Font.PLAIN, 13));
         }
         this.panelTabla.revalidate();
         this.panelTabla.repaint();
-        System.out.println("Salio?");
-        this.panelPrincipal.setPreferredSize(new Dimension(525,550));
+        this.panelPrincipal.setPreferredSize(new Dimension(550,550));
 	}
 	private void armarPanelAitken() {
 		JPanel botonPanel = new JPanel();
@@ -239,6 +235,34 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		sinInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.panelAitken.add(Box.createVerticalGlue()); // espacio abajo
 	}
+	private void completarTablaAitken() {
+		String[][] datos  = controllerMetodo.getMatrizAitken();
+		String[] columnas = controllerMetodo.getColumnas();
+		
+		this.panelAitken.removeAll();
+        if (datos.length == 0) {
+            JLabel sinDatos = new JLabel(this.labelSinInfo.getText(), SwingConstants.CENTER);
+            //sinDatos.setFont(new Font("SansSerif", Font.ITALIC, 14));
+            //add(sinDatos, BorderLayout.CENTER);
+        } else {
+            this.tablaAitken = new JTable(datos, columnas);
+            DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
+            derecha.setHorizontalAlignment(SwingConstants.RIGHT);
+            this.tablaAitken.getColumnModel().getColumn(2).setCellRenderer(derecha);
+
+            this.scrollAitken = new JScrollPane(this.tablaAitken);
+            this.scrollAitken.setBorder(new EmptyBorder(10, 10, 10, 10));
+            this.scrollAitken.setPreferredSize(new Dimension(480, 150));
+            this.scrollAitken.setMaximumSize(new Dimension(Integer.MAX_VALUE, 180));
+            this.tablaAitken.setFillsViewportHeight(true);
+
+            this.panelAitken.add(this.scrollAitken);
+            this.tablaAitken.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        }
+        this.panelAitken.revalidate();
+        this.panelAitken.repaint();
+        this.panelPrincipal.setPreferredSize(new Dimension(550,550));
+	}
 	
 	private void armarPanelPricipal() {
 		OyenteAcciones oyente = new OyenteAcciones();
@@ -259,7 +283,7 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		this.panelPrincipal.add(panelTabla);
 		this.panelPrincipal.add(panelAitken);
 		
-		this.panelPrincipal.setPreferredSize(new Dimension(525,450));
+		this.panelPrincipal.setPreferredSize(new Dimension(550,450));
 		this.panelPrincipal.setBorder(BorderFactory.createCompoundBorder(
 		    BorderFactory.createLineBorder(Color.BLACK, 1), // borde exterior negro
 		    new EmptyBorder(15,20,15,20) // margen interior
@@ -272,7 +296,7 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		add(scroll);
 		
 		setLayout(new FlowLayout());
-		setSize(600,700);
+		setSize(650,700);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -299,6 +323,8 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object fuente = e.getSource();
+			double resultado;
+			
 			if(fuente == buttonCalcular) {
 				int res = validarCampos();
 				if(res == -1) {
@@ -323,19 +349,39 @@ public class CalculadoraMetodos_GIU extends JFrame{
 				}
 				controllerMetodo = new MetodoController(textFuncion.getText());
 				
-				double resultado = controllerMetodo.calcular(comboMetodo.getSelectedIndex(), Double.parseDouble(textA.getText()), Double.parseDouble(textB.getText()), Double.parseDouble(textEpsilon.getText()));
+				
+				switch(comboMetodo.getSelectedIndex()) {
+					case 1,2,3,4 -> {
+						resultado = controllerMetodo.calcular(comboMetodo.getSelectedIndex(), Double.parseDouble(textA.getText()), Double.parseDouble(textB.getText()), Double.parseDouble(textEpsilon.getText()));
+					}
+					default -> {
+						resultado = controllerMetodo.calcular(comboMetodo.getSelectedIndex(), Double.parseDouble(textA.getText()), Double.parseDouble(textEpsilon.getText()));
+					}
+					
+				}
+				
 				if(!controllerMetodo.getError().isEmpty()) {
 					JOptionPane.showMessageDialog(null, controllerMetodo.getError(), "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 				textResultado.setText(String.valueOf(resultado));
 				
-				System.out.println("Mostrar tabla");
 				completarTabla();
 				
-				buttonAitken.setEnabled(true);
+				buttonAitken.setEnabled(true); //habilito aitken
+				System.out.println("Reiniciar aitken, controlar el tamaño con las 2 tablas pintadas");
+				/*panelAitken.removeAll();
+				panelAitken.revalidate();
+		        panelAitken.repaint();*/
+				
 			}else {
-				System.out.println("Solo si se calculó hacer el aitken");
+				int columna = -1;
+				switch(comboMetodo.getSelectedIndex()) {
+					case 6 -> columna = 2;
+				}
+				
+				resultado = controllerMetodo.calcularAitken(columna,Double.parseDouble(textEpsilon.getText()));
+				completarTablaAitken();
 				buttonAitken.setEnabled(false);
 			}
 		}

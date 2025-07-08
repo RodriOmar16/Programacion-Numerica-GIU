@@ -53,7 +53,7 @@ public class Funcion {
         this.jep.addVariable("x", nro);
         this.jep.parseExpression(funcionEvaluar);
         this.resultado = this.jep.getValue();
-        this.error = (this.jep.hasError())? "Existe un error.":"No hay error.";
+        this.error = (this.jep.hasError())? "Error: "+this.jep.getErrorInfo():"";
         
         return this.resultado;
     }
