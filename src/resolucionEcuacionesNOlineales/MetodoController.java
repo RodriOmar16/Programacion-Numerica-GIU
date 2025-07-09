@@ -75,13 +75,11 @@ public class MetodoController {
 		return resultado;
 	}
 	public double calcularAitken(int col, double epsilon) {	
-		mostrasTabla();
+		//mostrasTabla();
 		
 		int i = 0,j,k;
 		double an, an1 = 100, x0, x1, x2;
 		this.columnas = new String[] {"i", "xn", "xn+1", "xn+2", "aitken"};
-		
-		System.out.println("col: "+ col+ "\tEpsilon: "+epsilon);
 		
 		do {
 			an = an1;
@@ -91,13 +89,10 @@ public class MetodoController {
 			x1 = Double.parseDouble(this.matriz.get(j)[col]);
 			x2 = Double.parseDouble(this.matriz.get(k)[col]);
 			an1 = x0 - ( (Math.pow((x1 - x0),2)) / (x2 - 2*x1 + x0) );
-			System.out.println("an1: "+ an1);
 			
 			this.matrizAitken.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
 			i++;
 		}while(i < (this.matriz.size()-2) && Math.abs(an1- an) > epsilon);
-		System.out.println("i: "+ i);
-		System.out.println("an1: "+ an1);
 		this.matrizAitken.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
 		return an1;
 	}
@@ -245,7 +240,6 @@ public class MetodoController {
         this.columnas = new String[] {"i", "xn", "xn+1", "f(xn)","f'(xn)", "|xn+1 - xn|"};
         
         do{
-        	//System.out.println("i: "+i+"	"+xMas1);
     		xn = xMas1; 
         	
         	fxn = this.funcion.evaluar(xn);
@@ -277,7 +271,6 @@ public class MetodoController {
 		
 		do {
 			xi = xiMas1;
-			//System.out.println("i: "+i+"	xi: "+xi);
 			this.matriz.add(new String[] {String.valueOf(i),String.valueOf(xi),String.valueOf(xiMas1),String.valueOf(Math.abs(xiMas1 - xi))});
 		
 			xiMas1 = this.funcion.evaluar(xi);
@@ -309,15 +302,15 @@ public class MetodoController {
         	
         	fxn   = this.funcion.evaluar(xn);
         	if(this.funcion.getError().length() > 0) {
-        		System.out.println(this.funcion.getError());
+        		this.error = this.funcion.getError();
         	}
         	fpxn  = derivada.evaluar(xn);
         	if(derivada.getError().length() > 0) {
-        		System.out.println(derivada.getError());
+        		this.error = derivada.getError();
         	}
         	fpsxn = derivada2da.evaluar(xn);
         	if(derivada2da.getError().length() > 0) {
-        		System.out.println(derivada2da.getError());
+        		this.error = derivada2da.getError();
         	}
         	
         	xn1 = xn - (2*fxn*fpxn)/((2*Math.pow(fpxn, 2))-(fxn * fpsxn));
