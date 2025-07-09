@@ -14,8 +14,6 @@ public class Derivada {
 	//Constructor
 	public Derivada(String func) {
 		derivar(func);
-		/*this.djep 	   = new DJep();
-		this.expresion = func;*/
 	}
 	
 	//Methods
@@ -23,7 +21,6 @@ public class Derivada {
 	public String getFuncion() { return this.expresion; }
 	
 	public void derivar(String func) {
-		//String derivada = "";
 		try {
 			this.djep = new DJep();
             // agrega funciones estandares cos(x), sin(x)
