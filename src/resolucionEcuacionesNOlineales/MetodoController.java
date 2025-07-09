@@ -13,6 +13,7 @@ public class MetodoController {
 	public MetodoController(String func) {
 		this.funcion      = new Funcion(func);
 		this.matriz       = new ArrayList<>();
+		this.matrizAitken = new ArrayList<>();
 		this.error        = "";
 	}
 	
@@ -35,19 +36,23 @@ public class MetodoController {
 	}
 	public String[][] getMatrizAitken(){
 		int filas = this.matrizAitken.size(),
-				colum = this.matrizAitken.get(0).length;
+			colum = filas > 0 ? this.matrizAitken.get(0).length : 0;
 			
-			String [][]datos = new String[filas][colum];
-			for(int i=0; i<filas ;i++) {
-				for(int j=0; j<colum ;j++) {
-					datos[i][j] = this.matrizAitken.get(i)[j];
-				}
+		String [][]datos = new String[filas][colum];
+		for(int i=0; i<filas ;i++) {
+			for(int j=0; j<colum ;j++) {
+				datos[i][j] = this.matrizAitken.get(i)[j];
 			}
-			
-			return datos; 
+		}
+		
+		return datos; 
 	}
 	
 	//Methods
+	public void limpiarMatrizAitken() {
+		this.matrizAitken.clear();
+			
+	}
 	public double calcular(int metodo, double inicial, double b, double epsilon) {
 		double resultado = 0;
 		switch(metodo) {
@@ -69,12 +74,15 @@ public class MetodoController {
 		}
 		return resultado;
 	}
-	public double calcularAitken(int col, double epsilon) {
-		this.matrizAitken = new ArrayList<>();
+	public double calcularAitken(int col, double epsilon) {	
+		mostrasTabla();
 		
 		int i = 0,j,k;
-		double an=100, an1 = 0, x0, x1, x2;
+		double an, an1 = 100, x0, x1, x2;
 		this.columnas = new String[] {"i", "xn", "xn+1", "xn+2", "aitken"};
+		
+		System.out.println("col: "+ col+ "\tEpsilon: "+epsilon);
+		
 		do {
 			an = an1;
 			j = i + 1;
@@ -82,14 +90,14 @@ public class MetodoController {
 			x0 = Double.parseDouble(this.matriz.get(i)[col]);
 			x1 = Double.parseDouble(this.matriz.get(j)[col]);
 			x2 = Double.parseDouble(this.matriz.get(k)[col]);
-			an1 = x0 - (Math.pow((x1 - x0),2) - (x2 - 2*x1 + x0));
-			//System.out.println("an1: "+ an1);
+			an1 = x0 - ( (Math.pow((x1 - x0),2)) / (x2 - 2*x1 + x0) );
+			System.out.println("an1: "+ an1);
 			
 			this.matrizAitken.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
-			
 			i++;
 		}while(i < (this.matriz.size()-2) && Math.abs(an1- an) > epsilon);
-		//System.out.println("an1: "+ an1);
+		System.out.println("i: "+ i);
+		System.out.println("an1: "+ an1);
 		this.matrizAitken.add(new String[] {String.valueOf(i),String.valueOf(x0), String.valueOf(x1),String.valueOf(x2),String.valueOf(an1)});
 		return an1;
 	}
@@ -274,7 +282,7 @@ public class MetodoController {
 		
 			xiMas1 = this.funcion.evaluar(xi);
 			
-			this.matriz.add(new String[] {String.valueOf(i),String.valueOf(xi),String.valueOf(xiMas1),String.valueOf(Math.abs(xiMas1 - xi))});
+			//this.matriz.add(new String[] {String.valueOf(i),String.valueOf(xi),String.valueOf(xiMas1),String.valueOf(Math.abs(xiMas1 - xi))});
 			i++;
 		}while(Math.abs(xiMas1 - xi) > epsilon && i < 100);
 		this.matriz.add(new String[] {String.valueOf(i),String.valueOf(xi),String.valueOf(xiMas1),String.valueOf(Math.abs(xiMas1 - xi))});

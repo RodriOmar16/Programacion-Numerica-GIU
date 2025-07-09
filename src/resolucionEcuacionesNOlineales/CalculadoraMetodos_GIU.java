@@ -1,6 +1,5 @@
 package resolucionEcuacionesNOlineales;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -32,7 +31,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class CalculadoraMetodos_GIU extends JFrame{
 	//Atributos
-	private JLabel labelFuncion, labelMetodo, labelEpsilon, labelA, labelB, labelResultado, labelTraza, labelTrazaAitken, labelSinInfo;
+	private JLabel labelFuncion, labelMetodo, labelEpsilon, labelA, labelB, labelResultado, labelTraza, labelTrazaAitken, labelSinInfo, labelSinInfoAitken;
 	private JTextField textFuncion, textEpsilon, textA, textB, textResultado;
 	private JComboBox<String> comboMetodo;
 	private JButton buttonCalcular, buttonAitken;
@@ -67,15 +66,16 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		String[] metodos = {"", "Bisección", "Regula Falsi", "Regula Falsi Modificada", "Secante", "Newton - Rapshon", "Punto Fijo", "Convergencia Cúbica"};
 		
 		//label's
-		this.labelFuncion 	  = new JLabel("Función");
-		this.labelMetodo 	  = new JLabel("Seleccionar método");
-		this.labelEpsilon 	  = new JLabel("Epsilon");
-		this.labelA 		  = new JLabel("a");
-		this.labelB 		  = new JLabel("b");
-		this.labelResultado   = new JLabel("Resultado");
-		this.labelTraza 	  = new JLabel("Traza");
-		this.labelTrazaAitken = new JLabel("Traza Aitken");
-		this.labelSinInfo     = new JLabel("No hay datos para mostrar");
+		this.labelFuncion 	    = new JLabel("Función");
+		this.labelMetodo 	    = new JLabel("Seleccionar método");
+		this.labelEpsilon 	    = new JLabel("Epsilon");
+		this.labelA 		    = new JLabel("a");
+		this.labelB 		    = new JLabel("b");
+		this.labelResultado     = new JLabel("Resultado");
+		this.labelTraza 	    = new JLabel("Traza");
+		this.labelTrazaAitken   = new JLabel("Traza Aitken");
+		this.labelSinInfo       = new JLabel("No hay datos para mostrar");
+		this.labelSinInfoAitken = new JLabel("No hay datos para mostrar");
 		
 		//textField's
 		this.textFuncion   = new JTextField(15); 
@@ -172,7 +172,7 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		panelTabla.setMaximumSize(new Dimension(Integer.MAX_VALUE, panelTabla.getPreferredSize().height));
 	}
 	private void completarTabla() {
-		String[][] datos = controllerMetodo.getMatriz();
+		String[][] datos  = controllerMetodo.getMatriz();
 		String[] columnas = controllerMetodo.getColumnas();
 		
 		this.panelTabla.removeAll();
@@ -194,18 +194,20 @@ public class CalculadoraMetodos_GIU extends JFrame{
 
             this.panelTabla.add(this.scrollTabla);
             this.tabla.setFont(new Font("SansSerif", Font.PLAIN, 13));
+            
         }
         this.panelTabla.revalidate();
         this.panelTabla.repaint();
         this.panelPrincipal.setPreferredSize(new Dimension(550,550));
 	}
 	private void armarPanelAitken() {
-		JPanel botonPanel = new JPanel();
-		botonPanel.add(this.buttonAitken);
-		this.buttonAitken.setEnabled(false);
-		
-		JLabel sinInfo = new JLabel(this.labelSinInfo.getText());
-		sinInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		/*JPanel botonPanel = new JPanel();
+		botonPanel.add(this.buttonAitken);*/
+		this.buttonAitken.setHorizontalAlignment(SwingConstants.CENTER);
+		//this.buttonAitken.setEnabled(false);
+		this.labelSinInfoAitken.setHorizontalAlignment(SwingConstants.CENTER);
+		//JLabel sinInfo = new JLabel(this.labelSinInfoAitken.getText());
+		//sinInfothis.labelSinInfoAitken.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		/*this.panelAitken.add(botonPanel);
 		this.panelAitken.add(sinInfo);*/
@@ -227,13 +229,16 @@ public class CalculadoraMetodos_GIU extends JFrame{
 
 		// centrado vertical
 		this.panelAitken.add(Box.createVerticalGlue()); // espacio arriba
-		this.panelAitken.add(botonPanel);
-		botonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.panelAitken.add(this.buttonAitken);
+		this.buttonAitken.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		this.panelAitken.add(Box.createVerticalStrut(5)); // separación mínima
-		this.panelAitken.add(sinInfo);
-		sinInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.panelAitken.add(this.labelSinInfoAitken);
+		this.labelSinInfoAitken.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.panelAitken.add(Box.createVerticalGlue()); // espacio abajo
+		
+		//panelAitken.setPreferredSize(new Dimension(550, 180));
+		//panelAitken.setMaximumSize(new Dimension(Integer.MAX_VALUE, 180));
 	}
 	private void completarTablaAitken() {
 		String[][] datos  = controllerMetodo.getMatrizAitken();
@@ -241,33 +246,49 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		
 		this.panelAitken.removeAll();
         if (datos.length == 0) {
-            JLabel sinDatos = new JLabel(this.labelSinInfo.getText(), SwingConstants.CENTER);
-            //sinDatos.setFont(new Font("SansSerif", Font.ITALIC, 14));
-            //add(sinDatos, BorderLayout.CENTER);
+        	this.labelSinInfoAitken.setVisible(true);
+        	this.buttonAitken.setVisible(true);
+        	this.scrollAitken.setVisible(false);
+        	
+    		this.buttonAitken.setHorizontalAlignment(SwingConstants.CENTER);
+    		this.labelSinInfoAitken.setHorizontalAlignment(SwingConstants.CENTER);
+
+    		this.panelAitken.add(this.buttonAitken);
+    		this.panelAitken.add(this.labelSinInfoAitken);
+    		
+    		this.panelPrincipal.setPreferredSize(new Dimension(550,550));
         } else {
+        	this.labelSinInfoAitken.setVisible(false);
+        	this.buttonAitken.setVisible(false);
+        	
             this.tablaAitken = new JTable(datos, columnas);
             DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
             derecha.setHorizontalAlignment(SwingConstants.RIGHT);
             this.tablaAitken.getColumnModel().getColumn(2).setCellRenderer(derecha);
+            this.tablaAitken.setFillsViewportHeight(true);
+            this.tablaAitken.setFont(new Font("SansSerif", Font.PLAIN, 13));
 
             this.scrollAitken = new JScrollPane(this.tablaAitken);
             this.scrollAitken.setBorder(new EmptyBorder(10, 10, 10, 10));
             this.scrollAitken.setPreferredSize(new Dimension(480, 150));
             this.scrollAitken.setMaximumSize(new Dimension(Integer.MAX_VALUE, 180));
-            this.tablaAitken.setFillsViewportHeight(true);
-
+            
             this.panelAitken.add(this.scrollAitken);
-            this.tablaAitken.setFont(new Font("SansSerif", Font.PLAIN, 13));
+            this.panelPrincipal.setPreferredSize(new Dimension(550,650));
         }
         this.panelAitken.revalidate();
         this.panelAitken.repaint();
-        this.panelPrincipal.setPreferredSize(new Dimension(550,550));
+        
 	}
-	
+	private void resetearPanelAitken() {
+		this.controllerMetodo.limpiarMatrizAitken();
+		completarTablaAitken();
+	}
 	private void armarPanelPricipal() {
 		OyenteAcciones oyente = new OyenteAcciones();
 		this.buttonCalcular.addActionListener(oyente);
 		this.buttonAitken.addActionListener(oyente);
+		this.buttonAitken.setEnabled(false);
 		this.comboMetodo.addItemListener(oyente);
 		
 		this.panelTabla.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -369,15 +390,15 @@ public class CalculadoraMetodos_GIU extends JFrame{
 				completarTabla();
 				
 				buttonAitken.setEnabled(true); //habilito aitken
-				System.out.println("Reiniciar aitken, controlar el tamaño con las 2 tablas pintadas");
-				/*panelAitken.removeAll();
-				panelAitken.revalidate();
-		        panelAitken.repaint();*/
-				
+				if(scrollAitken != null) {
+					resetearPanelAitken();	
+				}
 			}else {
 				int columna = -1;
 				switch(comboMetodo.getSelectedIndex()) {
-					case 6 -> columna = 2;
+					case 1,2,3,4 -> columna = 5; 
+					case 5 -> columna = 2;
+					case 6 -> columna = 1;
 				}
 				
 				resultado = controllerMetodo.calcularAitken(columna,Double.parseDouble(textEpsilon.getText()));
