@@ -63,6 +63,7 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		UIManager.put("ToolTip.font", new Font("SansSerif", Font.PLAIN, 12)); // Fuente limpia
 	}
 	private void initComponents() {
+		//(e^x)-(x^2)+1
 		String[] metodos = {"", "Bisección", "Regula Falsi", "Regula Falsi Modificada", "Secante", "Newton - Rapshon", "Punto Fijo", "Convergencia Cúbica"};
 		
 		//label's
@@ -201,16 +202,9 @@ public class CalculadoraMetodos_GIU extends JFrame{
         this.panelPrincipal.setPreferredSize(new Dimension(550,550));
 	}
 	private void armarPanelAitken() {
-		/*JPanel botonPanel = new JPanel();
-		botonPanel.add(this.buttonAitken);*/
 		this.buttonAitken.setHorizontalAlignment(SwingConstants.CENTER);
-		//this.buttonAitken.setEnabled(false);
 		this.labelSinInfoAitken.setHorizontalAlignment(SwingConstants.CENTER);
-		//JLabel sinInfo = new JLabel(this.labelSinInfoAitken.getText());
-		//sinInfothis.labelSinInfoAitken.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		/*this.panelAitken.add(botonPanel);
-		this.panelAitken.add(sinInfo);*/
 		this.panelAitken.setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(5, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -236,9 +230,6 @@ public class CalculadoraMetodos_GIU extends JFrame{
 		this.panelAitken.add(this.labelSinInfoAitken);
 		this.labelSinInfoAitken.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.panelAitken.add(Box.createVerticalGlue()); // espacio abajo
-		
-		//panelAitken.setPreferredSize(new Dimension(550, 180));
-		//panelAitken.setMaximumSize(new Dimension(Integer.MAX_VALUE, 180));
 	}
 	private void completarTablaAitken() {
 		String[][] datos  = controllerMetodo.getMatrizAitken();
