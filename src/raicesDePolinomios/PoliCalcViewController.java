@@ -35,6 +35,7 @@ public class PoliCalcViewController extends JFrame{
 	    vista.getButtonDivir().addActionListener(e-> controlarDividir());
 	    vista.getButtonCalcularNewton().addActionListener(e-> controlarNewton());
 	    vista.getButtonDetRaices().addActionListener(e -> determinarRaices());
+	    vista.getButtonCotas().addActionListener(e -> determinarCotas());
 	}
 	private void iniciarVistaControlada() {
 		// Crear el panel interno dinámico
@@ -49,6 +50,7 @@ public class PoliCalcViewController extends JFrame{
 	    // Insertar en el panel que quedó vacío
 	    vista.getPanelTerminos().setLayout(new BorderLayout());
 	    vista.getPanelTerminos().add(scrollPolinomio, BorderLayout.CENTER);
+	    vista.getPanelTerminos().setBorder(new EmptyBorder(5, 20, 5, 20)); // arriba, izquierda, abajo, derecha
 	    vista.getPanelTerminos().revalidate();
 	    vista.getPanelTerminos().repaint();
 	
@@ -58,8 +60,22 @@ public class PoliCalcViewController extends JFrame{
 	    //doy border a las secciones
 	    darBorderApaneles();
 	    
-	    vista.setSize(525, 720); // Más ancho
+	    //Agrego scroll al panel principal
+	    JScrollPane scrollGlobal = new JScrollPane(vista.getPanelPrincipal());
+	    scrollGlobal.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+	    scrollGlobal.getVerticalScrollBar().setUnitIncrement(12);
+	    scrollGlobal.setBorder(null);
+	    vista.setContentPane(scrollGlobal);
+
+	    //ultimas config
+	    vista.setSize(540, 720); // Más ancho
+	    //vista.getPanelPrincipal().setPreferredSize(new Dimension(580, 1000)); // ajustá altura según tus secciones
+	    vista.getPanelPrincipal().setMaximumSize(new Dimension(580, 1000)); // evita estiramiento
 	    vista.setLocationRelativeTo(null); // Centrar en pantalla
+	    vista.setResizable(false);
+	    vista.revalidate();
+	    vista.repaint();
+
 	}
 	private void armarPolinomio(int grado) {
 		panelTerminos.removeAll();
@@ -130,9 +146,20 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	    vista.getPanelCotas().setBorder(BorderFactory.createCompoundBorder(
+			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
+			    BorderFactory.createTitledBorder(
+			        BorderFactory.createLineBorder(Color.GRAY),
+			        "Cotas de Raíces",
+			        TitledBorder.LEFT,
+			        TitledBorder.TOP,
+			        new Font("SansSerif", Font.BOLD, 12),
+			        Color.GRAY
+			    )
+			));
 	}
+	
 	public boolean esDouble(String entrada) {
-		System.out.println("si entro");
 	    try {
 	        Double.parseDouble(entrada);
 	        return true;
@@ -158,11 +185,6 @@ public class PoliCalcViewController extends JFrame{
 	        }
 	    }
 	    return coeficientes;
-	}
-	private boolean controloCoeficientePrincipal() {
-		List<Double> coeficientes = getCoeficientesIngresados();
-		this.polinomioController.asignarPolinomio(coeficientes);
-		return ( coeficientes.get(0) == 0 );
 	}
 	//Controla que se bloquea o que no 
 	public void controlSelecMetodo() {
@@ -202,11 +224,16 @@ public class PoliCalcViewController extends JFrame{
 		}
 		return cumple;
 	}
+	private boolean controloCoeficientePrincipal() {
+		List<Double> coeficientes = getCoeficientesIngresados();
+		this.polinomioController.asignarPolinomio(coeficientes);
+		return ( coeficientes.get(0) == 0 );
+	}
 	public void controlarDividir() {		
 		String resultado = "", aux[];
 		
 		if(!validarCoeficientesPolinomio()) {
-			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio debe ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		
@@ -276,7 +303,7 @@ public class PoliCalcViewController extends JFrame{
 	public void controlarNewton() {
 		String resultado;
 		if(!validarCoeficientesPolinomio()) {
-			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio debe ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if(controloCoeficientePrincipal()) {
@@ -302,10 +329,11 @@ public class PoliCalcViewController extends JFrame{
 		
 		resultado = polinomioController.aproximarRaices(Double.parseDouble(vista.getTextEpsilon().getText()), Double.parseDouble(vista.getTextValorInicial().getText()));
 		System.out.println("Aproximar por newton...");
+		vista.getTextResultado().setText(resultado);
 	}
 	public void determinarRaices() {
 		if(!validarCoeficientesPolinomio()) {
-			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio debe ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if(controloCoeficientePrincipal()) {
@@ -314,5 +342,17 @@ public class PoliCalcViewController extends JFrame{
 		}
 		
 		System.out.println("Determina raíces...");
+	}
+	public void determinarCotas() {
+		if(!validarCoeficientesPolinomio()) {
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(controloCoeficientePrincipal()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
+		System.out.println("Determino las cosas...");
 	}
 }

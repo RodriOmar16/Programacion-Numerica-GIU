@@ -61,7 +61,7 @@ public class PolinomioController {
 		int i, 
 			n = c.size(),
 			e = (n-1) - a;
-		for(i=(n-1);i>=a;i--){
+		for(i=(n-1); i>=a ;i--){
 			if(/*c[i]*/c.get(i) >= 0){
                 if(i!=(n-1)){
                     cad += "+";
@@ -96,10 +96,37 @@ public class PolinomioController {
         }
         return cad;
     }
+	public double newtonPolinomios(double xn1, double epsilon) {
+    	double xn;
+    	double[] dpP = new double[2];
+    	//System.out.println("xn1: " + xn1);
+    	do {
+    		xn = xn1;
+        	dpP = hornerNewton(xn);
+        	xn1 = xn - (dpP[0]/dpP[1]);
+        	//System.out.println("xn: "+xn+"\t xn1: "+xn1);
+        }while(Math.abs(xn1 - xn) > epsilon);
+      
+    	return xn1;
+    }
+
+    private double[] hornerNewton(double a) {
+	    int i, n = this.polinomio.getCoeficientes().size();
+	    double[] nh = new double[2];
+	    double dp = 0, p = this.polinomio.getCoeficientes().get(0);/*coef[n-1]*/;
+    
+		for(i = 1; i<n ;i++) {
+			dp = a*dp + p;
+			p = p*a + this.polinomio.getCoeficientes().get(i);
+		}
+		nh[0] = p;
+		nh[1] = dp; 
+		
+		return nh;
+    }
 	
 	public String aproximarRaices(double epsilon, double inicial) {
-		
-		return "";
+		return String.valueOf(newtonPolinomios(inicial, epsilon));
 	}
 	
 	public void determinarRaices() {
