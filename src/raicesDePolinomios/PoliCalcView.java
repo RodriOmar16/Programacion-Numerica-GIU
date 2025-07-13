@@ -504,7 +504,7 @@ public class PoliCalcView extends javax.swing.JFrame {
     public javax.swing.JTextField getTextB(){ return textB; }
     public javax.swing.JTextField getTextC(){ return textC; }
     public javax.swing.JTextField getTextCociente(){ return textCociente; }
-    public javax.swing.JTextField getTextEntereas(){ return textEnteras; }
+    public javax.swing.JTextField getTextEnteras(){ return textEnteras; }
     public javax.swing.JTextField getTextEpsilon(){ return textEpsilon; }
     public javax.swing.JTextField getTextRacionales(){ return textRacionales; }
     public javax.swing.JTextField getTextReales(){ return textReales; }

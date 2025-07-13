@@ -99,12 +99,10 @@ public class PolinomioController {
 	public double newtonPolinomios(double xn1, double epsilon) {
     	double xn;
     	double[] dpP = new double[2];
-    	//System.out.println("xn1: " + xn1);
     	do {
     		xn = xn1;
         	dpP = hornerNewton(xn);
         	xn1 = xn - (dpP[0]/dpP[1]);
-        	//System.out.println("xn: "+xn+"\t xn1: "+xn1);
         }while(Math.abs(xn1 - xn) > epsilon);
       
     	return xn1;
@@ -129,8 +127,33 @@ public class PolinomioController {
 		return String.valueOf(newtonPolinomios(inicial, epsilon));
 	}
 	
-	public void determinarRaices() {
+	private boolean detCoefEnteros() {
+		int i=0, n = this.polinomio.getCoeficientes().size();
+		while(i<n && this.polinomio.getCoeficientes().get(i)%1 == 0 ) {
+			i++;
+		}
+		return (i>=n);
+	}
+	
+	public String determinarRaices() {
 		//hace que su atributo polinomio calcula las raices de todo
 		//debo tener los get de las 3 tipos de raices
+
+		int n = this.polinomio.getCoeficientes().size();
+		String raicesEnteras 	= "",
+			   raicesRacionales = "",
+			   raicesReales     = "[]";
+		double terminoIndep = this.polinomio.getCoeficientes().get(n-1);
+		
+		if(!detCoefEnteros()) {
+			raicesEnteras    = "No admite raices enteras";
+			raicesRacionales = "No admite raices racionales";
+		}else {
+			if(terminoIndep == 0) {
+				raicesEnteras = "No admite raices enteras";	
+			}else raicesEnteras = this.polinomio.detRaicesEnteras();
+			raicesRacionales = this.polinomio.detRaicesRacioanles();
+		}
+		return raicesEnteras+ ";" +raicesRacionales+ ";" +raicesReales;
 	}
 }

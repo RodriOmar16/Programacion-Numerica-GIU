@@ -328,7 +328,6 @@ public class PoliCalcViewController extends JFrame{
 		}
 		
 		resultado = polinomioController.aproximarRaices(Double.parseDouble(vista.getTextEpsilon().getText()), Double.parseDouble(vista.getTextValorInicial().getText()));
-		System.out.println("Aproximar por newton...");
 		vista.getTextResultado().setText(resultado);
 	}
 	public void determinarRaices() {
@@ -340,8 +339,12 @@ public class PoliCalcViewController extends JFrame{
 			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		
-		System.out.println("Determina raíces...");
+	
+		String raicesStr = this.polinomioController.determinarRaices(),
+			   raices[]  = raicesStr.split(";");
+		vista.getTextEnteras().setText(raices[0]);
+		vista.getTextRacionales().setText(raices[1]);
+		vista.getTextReales().setText(raices[2]);
 	}
 	public void determinarCotas() {
 		if(!validarCoeficientesPolinomio()) {
