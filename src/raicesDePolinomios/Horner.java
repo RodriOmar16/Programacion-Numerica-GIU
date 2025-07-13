@@ -7,8 +7,16 @@ public class Horner {
 	private ArrayList<Double> coeficientes;
 	
 	//Constructor
+	public Horner() {
+		coeficientes = new ArrayList<Double>();
+	}
 	public Horner(ArrayList<Double> coef) {
 		coeficientes = new ArrayList<Double>();
+		setCoeficientes(coef);
+	}
+	
+	//Getters and Setters
+	public void setCoeficientes(ArrayList<Double> coef) {
 		coeficientes.clear();
 		coeficientes.addAll(coef);
 	}
