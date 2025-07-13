@@ -92,24 +92,18 @@ public class Polinomio {
 				          auxHorner, 
 				          raices         = new ArrayList<Double>();
 		
-		System.out.println("posiblesRaices: " + posiblesRaices);
 		for(Double divisor : posiblesRaices) {
-			System.out.println("Divisor: "+divisor);
 			//Positivas
 			auxHorner = horner.simpleCaso1(-1*divisor);
 			tam = auxHorner.size();
-			System.out.println("auxHorner: "+auxHorner+"\t auxHorner.get(tam - 1): "+ auxHorner.get(tam - 1));
 			if(auxHorner.get(tam - 1) == 0) { //resto == 0
-				System.out.println("entro positivo");
 				raices.add(divisor);
 			}
 			
 			//Negativas
 			auxHorner = horner.simpleCaso1(divisor);
 			tam = auxHorner.size();
-			System.out.println("auxHorner: "+auxHorner+"\t auxHorner.get(tam - 1): "+ auxHorner.get(tam - 1));
 			if(auxHorner.get(tam - 1) == 0) { //resto == 0
-				System.out.println("entro negativo");
 				raices.add(-1 * divisor);
 			}
 		}
