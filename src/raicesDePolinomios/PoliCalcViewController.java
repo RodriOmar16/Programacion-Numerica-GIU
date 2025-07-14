@@ -36,6 +36,7 @@ public class PoliCalcViewController extends JFrame{
 	    vista.getButtonCalcularNewton().addActionListener(e-> controlarNewton());
 	    vista.getButtonDetRaices().addActionListener(e -> determinarRaices());
 	    vista.getButtonCotas().addActionListener(e -> determinarCotas());
+	    vista.getButtonRaicesBairstow().addActionListener(e -> determinarRaicesBairstow());
 	}
 	private void iniciarVistaControlada() {
 		// Crear el panel interno dinámico
@@ -157,6 +158,26 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	    vista.getPanelRaicesBairstow().setBorder(BorderFactory.createCompoundBorder(
+			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
+			    BorderFactory.createTitledBorder(
+			        BorderFactory.createLineBorder(Color.GRAY),
+			        "Raíces Bairstow",
+			        TitledBorder.LEFT,
+			        TitledBorder.TOP,
+			        new Font("SansSerif", Font.BOLD, 12),
+			        Color.GRAY
+			    )
+			));
+	}
+	
+	public boolean esInteger(String entrada) {
+	    try {
+	        Integer.parseInt(entrada);
+	        return true;
+	    } catch (NumberFormatException e) {
+	        return false;
+	    }
 	}
 	
 	public boolean esDouble(String entrada) {
@@ -344,7 +365,6 @@ public class PoliCalcViewController extends JFrame{
 			   raices[]  = raicesStr.split(";");
 		vista.getTextEnteras().setText(raices[0]);
 		vista.getTextRacionales().setText(raices[1]);
-		vista.getTextReales().setText(raices[2]);
 	}
 	public void determinarCotas() {
 		if(!validarCoeficientesPolinomio()) {
@@ -357,5 +377,53 @@ public class PoliCalcViewController extends JFrame{
 		}
 		
 		System.out.println("Determino las cosas...");
+	}
+	public void determinarRaicesBairstow() {
+		String raices;
+		if(!validarCoeficientesPolinomio()) {
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(controloCoeficientePrincipal()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
+		if(vista.getTextEpsilonBairstow().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor de tolerancia (Epsilon Bairstow).", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(!esDouble(vista.getTextEpsilonBairstow().getText())) {
+			JOptionPane.showMessageDialog(null, "Debes ingresar un número válido en el campo Epsilon (Bairstow)", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		    return;
+		}
+		if(vista.getTextR().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un r.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(!esDouble(vista.getTextR().getText())) {
+			JOptionPane.showMessageDialog(null, "Debes ingresar un número válido en el campo r", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		    return;
+		}
+		if(vista.getTextS().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un s.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(!esDouble(vista.getTextS().getText())) {
+			JOptionPane.showMessageDialog(null, "Debes ingresar un número válido en el campo s", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		    return;
+		}
+		
+		if(vista.getTextMaxIter().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un Máx. Iter.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(!esInteger(vista.getTextMaxIter().getText())) {
+			JOptionPane.showMessageDialog(null, "Debes ingresar un número válido en el campo Máx. Iter.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		    return;
+		}
+		
+		raices = this.polinomioController.detRaicesReales(Double.parseDouble(vista.getTextEpsilonBairstow().getText()),Double.parseDouble(vista.getTextR().getText()),Double.parseDouble(vista.getTextS().getText()),Integer.parseInt(vista.getTextMaxIter().getText()));
+		System.out.println("raices: " + raices);
 	}
 }

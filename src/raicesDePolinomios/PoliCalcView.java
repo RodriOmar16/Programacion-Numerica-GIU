@@ -76,6 +76,16 @@ public class PoliCalcView extends javax.swing.JFrame {
         textCotaSupNeg = new javax.swing.JTextField();
         labelCotaSupPos = new javax.swing.JLabel();
         buttonCotas = new javax.swing.JButton();
+        panelRaicesBairstow = new javax.swing.JPanel();
+        labelEpsilonBairstow = new javax.swing.JLabel();
+        textEpsilonBairstow = new javax.swing.JTextField();
+        labelR = new javax.swing.JLabel();
+        textR = new javax.swing.JTextField();
+        labelS = new javax.swing.JLabel();
+        textS = new javax.swing.JTextField();
+        labelMaxIter = new javax.swing.JLabel();
+        textMaxIter = new javax.swing.JTextField();
+        buttonRaicesBairstow = new javax.swing.JButton();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -223,8 +233,6 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        labelReales.setText("Reales:");
-
         labelRacionales.setText("Racionales:");
 
         labelEnteras.setText("Enteras:");
@@ -239,35 +247,33 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelRacionales)
-                    .addComponent(labelReales)
                     .addComponent(labelEnteras))
                 .addGap(18, 18, 18)
                 .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(textRacionales)
-                    .addComponent(textReales, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textEnteras, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(26, 26, 26)
                 .addComponent(buttonRaices)
-                .addGap(26, 26, 26))
+                .addGap(27, 27, 27))
         );
         panelRaicesLayout.setVerticalGroup(
-            panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRaicesLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelEnteras)
-                    .addComponent(textEnteras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelRacionales)
-                    .addComponent(textRacionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonRaices))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelReales)
-                    .addComponent(textReales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
+                panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelRaicesLayout.createSequentialGroup()
+                    .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelRaicesLayout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelEnteras)
+                                .addComponent(textEnteras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(panelRaicesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelRacionales)
+                                .addComponent(textRacionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelRaicesLayout.createSequentialGroup()
+                            .addGap(35, 35, 35)
+                            .addComponent(buttonRaices)))
+                    .addContainerGap(26, Short.MAX_VALUE))
+            );
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelTitulo.setText("Calculadora de Polinomios");
@@ -325,7 +331,81 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(panelTerminos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-//
+        
+        labelReales.setText("Reales:");
+
+        labelEpsilonBairstow.setText("Epsilon:");
+
+        labelR.setText("r:");
+
+        labelS.setText("s:");
+
+        labelMaxIter.setText("Máx. Iter:");
+
+        buttonRaicesBairstow.setText("Det. Raices");
+
+        javax.swing.GroupLayout panelRaicesBairstowLayout = new javax.swing.GroupLayout(panelRaicesBairstow);
+        panelRaicesBairstow.setLayout(panelRaicesBairstowLayout);
+        panelRaicesBairstowLayout.setHorizontalGroup(
+            panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                                .addComponent(labelReales)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textReales))
+                            .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelEpsilonBairstow)
+                                    .addComponent(textEpsilonBairstow, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(31, 31, 31)
+                                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textR, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelR))
+                                .addGap(27, 27, 27)
+                                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelS)
+                                    .addComponent(textS, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelMaxIter)
+                                    .addComponent(textMaxIter, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(buttonRaicesBairstow)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRaicesBairstowLayout.setVerticalGroup(
+            panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRaicesBairstowLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                        .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelEpsilonBairstow)
+                            .addComponent(labelR))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(textEpsilonBairstow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textMaxIter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelRaicesBairstowLayout.createSequentialGroup()
+                        .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelS)
+                            .addComponent(labelMaxIter))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(21, 21, 21)
+                .addGroup(panelRaicesBairstowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelReales)
+                    .addComponent(textReales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(buttonRaicesBairstow)
+                .addContainerGap())
+        );
 
         comboMetodoCotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Newton", "Laguerre", "Lagrange" }));
 
@@ -337,7 +417,7 @@ public class PoliCalcView extends javax.swing.JFrame {
 
         labelCotaSupPos.setText("Sup. Positiva");
 
-        buttonCotas.setText("´Cotas");
+        buttonCotas.setText("Cotas");
 
         javax.swing.GroupLayout panelCotasLayout = new javax.swing.GroupLayout(panelCotas);
         panelCotas.setLayout(panelCotasLayout);
@@ -397,21 +477,9 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonCotas)
                 .addGap(12, 12, 12))
-        );
-//
+        );       
+
         /*javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelRaizAprox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelRaices, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelPolinomio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelDivision, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );*/
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,6 +499,9 @@ public class PoliCalcView extends javax.swing.JFrame {
                             .addComponent(panelRaizAprox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panelRaices, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                    .addComponent(panelRaicesBairstow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
         );
         panelPrincipalLayout.setVerticalGroup(
                 panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,20 +516,46 @@ public class PoliCalcView extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelCotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
-            );
-        /*panelPrincipalLayout.setVerticalGroup(
+            );*/
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addComponent(panelPolinomio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelPolinomio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(panelDivision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelCotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelRaizAprox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelRaices, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelRaicesBairstow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+        );
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addComponent(panelPolinomio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDivision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelRaizAprox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelRaices, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );*/
-
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelRaicesBairstow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelCotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        
         panelDivision.getAccessibleContext().setAccessibleName("");
         panelDivision.getAccessibleContext().setAccessibleDescription("");
 
@@ -488,6 +585,7 @@ public class PoliCalcView extends javax.swing.JFrame {
     public javax.swing.JButton getButtonCalcularNewton() { return buttonCalcular; }
     public javax.swing.JButton getButtonDetRaices() { return buttonRaices; }
     public javax.swing.JButton getButtonCotas() { return buttonCotas; }
+    public javax.swing.JButton getButtonRaicesBairstow() { return buttonRaicesBairstow; }
     
 
     //Paneles
@@ -498,6 +596,7 @@ public class PoliCalcView extends javax.swing.JFrame {
     public javax.swing.JPanel getPanelNewton(){ return this.panelRaizAprox; }
     public javax.swing.JPanel getPanelRaices(){ return this.panelRaices; }
     public javax.swing.JPanel getPanelCotas(){ return this.panelCotas; }
+    public javax.swing.JPanel getPanelRaicesBairstow(){ return this.panelRaicesBairstow; }
     
     //TextField
     public javax.swing.JTextField getTextA(){ return textA; }
@@ -515,6 +614,11 @@ public class PoliCalcView extends javax.swing.JFrame {
     public javax.swing.JTextField getTextCotaSupNeg(){ return textCotaSupNeg; }
     public javax.swing.JTextField getTextCotaInfPos(){ return textCotaInfPos; }
     public javax.swing.JTextField getTextCotaSupPos(){ return textCotaSupPos; }
+    public javax.swing.JTextField getTextEpsilonBairstow(){ return textEpsilonBairstow; }
+    public javax.swing.JTextField getTextR(){ return textR; }
+    public javax.swing.JTextField getTextS(){ return textS; }
+    public javax.swing.JTextField getTextMaxIter(){ return textMaxIter; }
+    
     
     //ComboBox
     public javax.swing.JComboBox<String> getComboMetodo() { return comboMetodo; }
@@ -527,6 +631,7 @@ public class PoliCalcView extends javax.swing.JFrame {
     private javax.swing.JButton buttonDividir;
     private javax.swing.JButton buttonQuitarTerminos;
     private javax.swing.JButton buttonRaices;
+    private javax.swing.JButton buttonRaicesBairstow;
     private javax.swing.JComboBox<String> comboMetodo;
     private javax.swing.JComboBox<String> comboMetodoCotas;
     private javax.swing.JLayeredPane jLayeredPane1;
@@ -541,12 +646,16 @@ public class PoliCalcView extends javax.swing.JFrame {
     private javax.swing.JLabel labelCotaSupPos;
     private javax.swing.JLabel labelEnteras;
     private javax.swing.JLabel labelEpsilon;
+    private javax.swing.JLabel labelEpsilonBairstow;
+    private javax.swing.JLabel labelMaxIter;
     private javax.swing.JLabel labelMetodo;
     private javax.swing.JLabel labelPolinomio;
+    private javax.swing.JLabel labelR;
     private javax.swing.JLabel labelRacionales;
     private javax.swing.JLabel labelReales;
     private javax.swing.JLabel labelResto;
     private javax.swing.JLabel labelResultado;
+    private javax.swing.JLabel labelS;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelValorInicial;
     private javax.swing.JPanel panelCotas;
@@ -554,6 +663,7 @@ public class PoliCalcView extends javax.swing.JFrame {
     private javax.swing.JPanel panelPolinomio;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelRaices;
+    private javax.swing.JPanel panelRaicesBairstow;
     private javax.swing.JPanel panelRaizAprox;
     private javax.swing.JPanel panelTerminos;
     private javax.swing.JTextField textA;
@@ -566,9 +676,13 @@ public class PoliCalcView extends javax.swing.JFrame {
     private javax.swing.JTextField textCotaSupPos;
     private javax.swing.JTextField textEnteras;
     private javax.swing.JTextField textEpsilon;
+    private javax.swing.JTextField textEpsilonBairstow;
+    private javax.swing.JTextField textMaxIter;
+    private javax.swing.JTextField textR;
     private javax.swing.JTextField textRacionales;
     private javax.swing.JTextField textReales;
     private javax.swing.JTextField textResto;
+    private javax.swing.JTextField textS;
     private javax.swing.JTextField textValorInicial;
     // End of variables declaration                   
 }

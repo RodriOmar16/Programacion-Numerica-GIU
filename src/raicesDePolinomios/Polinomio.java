@@ -168,7 +168,7 @@ public class Polinomio {
 		
 		return xr;
 	}
-	public void bairstow(double epsilon, double r, double s, int maxIter) {
+	public String bairstow(double epsilon, double r, double s, int maxIter) {
 		int n     = this.coeficientes.size(),
 			//tamC, tamB,
 			g    = n-1,
@@ -196,26 +196,18 @@ public class Polinomio {
 			System.out.println("en el while, antes del do-while, iter: "+iter);
 			do {
 				iter++;
+				
 				horner.setCoeficientes(p);
 				b = horner.dobleCaso1(-1*r, -1*s);
-				System.out.println("iter: "+iter+"\tb: "+b);
-				//tamB = b.size();
-				//b = hornerDobleBairstow(p,n,-1*r,-1*s);
+
 				horner.setCoeficientes(b);
 				c = horner.dobleCaso1(-1*r, -1*s);
-				System.out.println("iter: "+iter+"\tc: "+c);
-				//tamC = c.size();
-//				c = hornerDobleBairstow(b,n,-1*r,-1*s);
 
 				det = Math.pow(c.get(n-3),2) - (c.get(n-2) * c.get(n-4));
-				System.out.println("det: "+ det);
+
 				if(det != 0) {
-					//dr = (b[0]*c[3]-b[1]*c[2])/(det);
 					dr = (b.get(n-1) * c.get(n-4) - b.get(n-2)*c.get(n-3))/det;
-					//ds = (b[1]*c[1]-b[0]*c[2])/(det);
 					ds = (b.get(n-2)*c.get(n-2) - b.get(n-1)*c.get(n-3))/det;
-					
-					System.out.println("dr: "+ dr+"\t ds: "+ds);
 					
 					r += dr;
 					s += ds;
@@ -227,61 +219,39 @@ public class Polinomio {
 					r += 1;
 					s += 1;
 					iter = 0;
-				}
-				System.out.println("r: "+r+"\ts:"+s);
+				} 
 			}while((errorR > epsilon || errorS > epsilon) && (iter <= maxIter));
-			//r = Math.round(r); s = Math.round(s);
 
 			raicesPar 		= formulaCuadratica(-1*r,-1*s);
-			
-			//reales[g-1] 		= /*Math.round(*/raicesPar[0][0]/*)*/;
 			reales.add(raicesPar[0][0]);		imaginarias.add(raicesPar[0][1]);
-			//imaginarias[g-1] 	= raicesPar[0][1];
 			reales.add(raicesPar[1][0]);		imaginarias.add(raicesPar[1][1]);
-			//reales[g-2] 		= /*Math.round(*/raicesPar[1][0]/*)*/;
-			//imaginarias[g-2] 	= raicesPar[1][1];
-			
-			//b = hornerDobleBairstow(p,n,-1*r,-1*s);
+
 			horner.setCoeficientes(p);
 			b = horner.dobleCaso1(-1*r, -1*s);
-			System.out.println("horner final - con las mejoras: "+ b);
-			g -= 2;//	n -= 2;		
-			/*for(int i=n-1; i>=0 ;i--) {
-				p[i] = b[i+2];
-				System.out.println("p["+i+"]: "+p[i]);
-			}*/
+			
+			g -= 2;
+
 			p.clear(); //reseteo
 			p.addAll(b); //copio el nuevo polinomio factor
-			System.out.println("nuevo p, o polinomio factor: "+ p);
 		}
 		if(iter <= maxIter) {
 			if(g == 2) {
-				r 			= (p.get(1))/(p.get(0))/*(p[1]/p[0])*/;
-				s 			= (p.get(2))/(p.get(0))/*(p[2]/p[0])*/;
+				r 			= (p.get(1))/(p.get(0));
+				s 			= (p.get(2))/(p.get(0));
 				raicesPar 	= formulaCuadratica(r,s);
-				//reales[g-1] 		= raicesPar[0][0];
-				//imaginarias[g-1] 	= raicesPar[0][1];
 				reales.add(raicesPar[0][0]);		imaginarias.add(raicesPar[0][1]);
-				//reales[g-2] 		= raicesPar[1][0];
-				//imaginarias[g-2] 	= raicesPar[1][1];
 				reales.add(raicesPar[1][0]);		imaginarias.add(raicesPar[1][1]);
 			}else {
-				//reales[0] 		= -(p[0]/p[1]);
-				//imaginarias[0] 	= 0;
 				reales.add(p.get(1)/p.get(0));
 				imaginarias.add((double) 0);
 			}
 		}
-		System.out.println("");
-		/*for(int j=0; j<this.cantTerminos-1 ;j++) {
-			System.out.println("real["+j+"]: "+reales[j]);
-			System.out.println("imaginarias["+j+"]: "+imaginarias[j]);
-		}*/
+
 		System.out.println("reales: "+reales+"\t imaginarias: "+imaginarias);
+		return reales.toString() + ";" + imaginarias.toString();
 	}
 	
-	public String detRaicesReales() {
-		bairstow(0.0001,1,-1,10);
-		return "[]";
+	public String detRaicesReales(double epsilon, double r, double s, int maxIter) {
+		return bairstow(epsilon, r,s, maxIter);
 	}
 }

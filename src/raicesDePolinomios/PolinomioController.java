@@ -141,8 +141,7 @@ public class PolinomioController {
 
 		int n = this.polinomio.getCoeficientes().size();
 		String raicesEnteras 	= "",
-			   raicesRacionales = "",
-			   raicesReales     = "";
+			   raicesRacionales = "";
 		double terminoIndep = this.polinomio.getCoeficientes().get(n-1);
 		
 		if(!detCoefEnteros()) {
@@ -155,8 +154,11 @@ public class PolinomioController {
 			raicesRacionales = this.polinomio.detRaicesRacionales();
 		}
 		
-		raicesReales = this.polinomio.detRaicesReales();
-		
-		return raicesEnteras+ ";" +raicesRacionales+ ";" +raicesReales;
+		return raicesEnteras+ ";" +raicesRacionales;
+	}
+	public String detRaicesReales(double epsilon, double r, double s, int maxIter) {
+		String raicesReales;
+		raicesReales = this.polinomio.detRaicesReales(epsilon, r, s, maxIter);
+		return raicesReales;
 	}
 }
