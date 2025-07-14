@@ -166,6 +166,7 @@ public class PoliCalcViewController extends JFrame{
 	    vista.getButtonDivir().addActionListener(e-> controlarDividir());
 	    vista.getButtonCalcularNewton().addActionListener(e-> controlarNewton());
 	    vista.getButtonDetRaices().addActionListener(e -> determinarRaices());
+	    vista.getComboMetodoCotas().addItemListener(e -> controlSelecMetodoCotas());
 	    vista.getButtonCotas().addActionListener(e -> determinarCotas());
 	    vista.getButtonRaicesBairstow().addActionListener(e -> determinarRaicesBairstow());
 	}
@@ -416,15 +417,46 @@ public class PoliCalcViewController extends JFrame{
 		vista.getTextReales().setText(raices[0]);
 		vista.getTextImaginarias().setText(raices[1]);
 	}
+	public void controlSelecMetodoCotas() {
+		int metodo = vista.getComboMetodoCotas().getSelectedIndex(); 
+		if(metodo == 3) {
+			vista.getTextValorInicialCotas().setEnabled(false);
+		}else vista.getTextValorInicialCotas().setEnabled(true);
+	}
 	public void determinarCotas() {
 		if(!validarCoeficientesPolinomio()) {
-			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if(controloCoeficientePrincipal()) {
-			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
+		int metodo = vista.getComboMetodoCotas().getSelectedIndex();
+		String cotasStr = "", cotas[];
+		
+		if(metodo == 0) {
+			JOptionPane.showMessageDialog(null, "Se requiere seleccionar un método para determinarlas cotas.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		switch(metodo) {
+			case 1,2 -> {
+				if(vista.getTextValorInicialCotas().getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor inicial para el método.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				if(!esDouble(vista.getTextValorInicialCotas().getText()) ) {
+					JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor inicial de cota válido.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				cotasStr = this.polinomioController.detCotas(metodo, Double.parseDouble(vista.getTextValorInicialCotas().getText()));
+			}
+			case 3 -> {
+				cotasStr = this.polinomioController.detCotas(metodo);
+			}
+		}
+		
+		cotas = cotasStr.split(";");
 		
 		System.out.println("Determino las cosas...");
 	}

@@ -159,4 +159,10 @@ public class PolinomioController {
 		raicesReales = this.polinomio.detRaicesReales(epsilon, r, s, maxIter);
 		return raicesReales;
 	}
+	public String detCotas(int metodo) {
+		return "";
+	}
+	public String detCotas(int metodo, double valInicial) {
+		return "";
+	}
 }
