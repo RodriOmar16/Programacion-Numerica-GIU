@@ -423,6 +423,12 @@ public class PoliCalcViewController extends JFrame{
 			vista.getTextValorInicialCotas().setEnabled(false);
 		}else vista.getTextValorInicialCotas().setEnabled(true);
 	}
+	private boolean coefPrincipalPos(){
+		return this.polinomioController.coefPrincipalPos();
+	}
+	private boolean alMenosUnNegativo() {
+		return this.polinomioController.detAlMenosUnNeg();
+	}
 	public void determinarCotas() {
 		if(!validarCoeficientesPolinomio()) {
 			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -449,9 +455,17 @@ public class PoliCalcViewController extends JFrame{
 					JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor inicial de cota válido.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
-				cotasStr = this.polinomioController.detCotas(metodo, Double.parseDouble(vista.getTextValorInicialCotas().getText()));
+				cotasStr = this.polinomioController.detCotas(metodo, Double.parseDouble(vista.getTextValorInicialCotas().getText()),vista.getCheckRefinar().isSelected());
 			}
 			case 3 -> {
+				if(!coefPrincipalPos()) {
+					JOptionPane.showMessageDialog(null, "Para aplicar el método de Lagrange el grado del polinomio debe ser positivo.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				if(!alMenosUnNegativo()) {
+					JOptionPane.showMessageDialog(null, "Para aplicar el método de Lagrange el polinomio debe tener al menos un término negativo.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
 				cotasStr = this.polinomioController.detCotas(metodo);
 			}
 		}

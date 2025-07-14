@@ -79,6 +79,7 @@ public class PoliCalcView extends javax.swing.JFrame {
         labelMetodoCotas = new javax.swing.JLabel();
         labelValorInicialCotas = new javax.swing.JLabel();
         textValorInicialCotas = new javax.swing.JTextField();
+        checkRefinar = new javax.swing.JCheckBox();
         panelRaicesBairstow = new javax.swing.JPanel();
         labelEpsilonBairstow = new javax.swing.JLabel();
         textEpsilonBairstow = new javax.swing.JTextField();
@@ -422,7 +423,7 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        comboMetodoCotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Newton", "Laguerre", "Lagrange" }));
+        /*comboMetodoCotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Newton", "Laguerre", "Lagrange" }));
 
         labelCotaInfNeg.setText("Inf. Negativa");
 
@@ -505,7 +506,94 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonCotas)
                 .addGap(12, 12, 12))
-        );  
+        );  */
+        comboMetodoCotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Newton", "Laguerre", "Lagrange" }));
+
+        labelCotaInfNeg.setText("Inf. Negativa");
+
+        labelCotaInfPos.setText("Inf. Positiva");
+
+        labelCotaSupNeg.setText("Sup. Negativa");
+
+        labelCotaSupPos.setText("Sup. Positiva");
+
+        buttonCotas.setText("Cotas");
+
+        labelMetodoCotas.setText("Selec.:");
+
+        labelValorInicialCotas.setText("Valor Inicial:");
+
+        checkRefinar.setText("Refinar");
+
+        javax.swing.GroupLayout panelCotasLayout = new javax.swing.GroupLayout(panelCotas);
+        panelCotas.setLayout(panelCotasLayout);
+        panelCotasLayout.setHorizontalGroup(
+            panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCotasLayout.createSequentialGroup()
+                .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCotasLayout.createSequentialGroup()
+                        .addGap(184, 184, 184)
+                        .addComponent(buttonCotas))
+                    .addGroup(panelCotasLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelCotasLayout.createSequentialGroup()
+                                .addComponent(labelCotaInfPos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textCotaInfPos, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(labelCotaSupPos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textCotaSupPos, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelCotasLayout.createSequentialGroup()
+                                .addComponent(labelCotaInfNeg)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textCotaInfNeg, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(labelCotaSupNeg)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textCotaSupNeg, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelCotasLayout.createSequentialGroup()
+                                .addComponent(labelMetodoCotas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboMetodoCotas, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelValorInicialCotas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textValorInicialCotas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(checkRefinar)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelCotasLayout.setVerticalGroup(
+            panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCotasLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboMetodoCotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelMetodoCotas)
+                    .addComponent(labelValorInicialCotas)
+                    .addComponent(textValorInicialCotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkRefinar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelCotaSupNeg)
+                        .addComponent(textCotaSupNeg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelCotaInfNeg)
+                        .addComponent(textCotaInfNeg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelCotaInfPos)
+                        .addComponent(textCotaInfPos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textCotaSupPos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelCotaSupPos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonCotas)
+                .addGap(12, 12, 12))
+        );
         
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -615,6 +703,9 @@ public class PoliCalcView extends javax.swing.JFrame {
     //ComboBox
     public javax.swing.JComboBox<String> getComboMetodo() { return comboMetodo; }
     public javax.swing.JComboBox<String> getComboMetodoCotas() { return comboMetodoCotas; }
+    
+    //CheckBox
+    public javax.swing.JCheckBox getCheckRefinar(){ return checkRefinar; }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton buttonAgregarTerminos;
@@ -624,6 +715,7 @@ public class PoliCalcView extends javax.swing.JFrame {
     private javax.swing.JButton buttonQuitarTerminos;
     private javax.swing.JButton buttonRaices;
     private javax.swing.JButton buttonRaicesBairstow;
+    private javax.swing.JCheckBox checkRefinar;
     private javax.swing.JComboBox<String> comboMetodo;
     private javax.swing.JComboBox<String> comboMetodoCotas;
     private javax.swing.JLayeredPane jLayeredPane1;
