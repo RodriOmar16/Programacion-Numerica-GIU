@@ -333,7 +333,7 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(panelTerminos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        
+                
         labelReales.setText("Reales:");
 
         labelEpsilonBairstow.setText("Epsilon:");

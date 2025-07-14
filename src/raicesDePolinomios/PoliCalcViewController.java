@@ -28,16 +28,6 @@ public class PoliCalcViewController extends JFrame{
 		iniciarVistaControlada();
 		darAcciones();
 	}
-	private void darAcciones() {
-		vista.getButtonAgregar().addActionListener(e -> {if (gradoActual < 20) armarPolinomio(++gradoActual); });// Límite arbitrario
-	    vista.getButtonQuitar().addActionListener(e -> { if (gradoActual > 0) armarPolinomio(--gradoActual); });
-	    vista.getComboMetodo().addItemListener(e -> controlSelecMetodo());
-	    vista.getButtonDivir().addActionListener(e-> controlarDividir());
-	    vista.getButtonCalcularNewton().addActionListener(e-> controlarNewton());
-	    vista.getButtonDetRaices().addActionListener(e -> determinarRaices());
-	    vista.getButtonCotas().addActionListener(e -> determinarCotas());
-	    vista.getButtonRaicesBairstow().addActionListener(e -> determinarRaicesBairstow());
-	}
 	private void iniciarVistaControlada() {
 		// Crear el panel interno dinámico
 	    panelTerminos = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -46,7 +36,7 @@ public class PoliCalcViewController extends JFrame{
 	    JScrollPane scrollPolinomio = new JScrollPane(panelTerminos);
 	    scrollPolinomio.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    scrollPolinomio.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-	    scrollPolinomio.setPreferredSize(new Dimension(430, 60));
+	    scrollPolinomio.setPreferredSize(new Dimension(455, 55));
 	
 	    // Insertar en el panel que quedó vacío
 	    vista.getPanelTerminos().setLayout(new BorderLayout());
@@ -69,8 +59,7 @@ public class PoliCalcViewController extends JFrame{
 	    vista.setContentPane(scrollGlobal);
 
 	    //ultimas config
-	    vista.setSize(540, 720); // Más ancho
-	    //vista.getPanelPrincipal().setPreferredSize(new Dimension(580, 1000)); // ajustá altura según tus secciones
+	    vista.setSize(545, 720); // Más ancho
 	    vista.getPanelPrincipal().setMaximumSize(new Dimension(580, 1000)); // evita estiramiento
 	    vista.setLocationRelativeTo(null); // Centrar en pantalla
 	    vista.setResizable(false);
@@ -101,7 +90,7 @@ public class PoliCalcViewController extends JFrame{
 	    panelTerminos.revalidate();
 	    panelTerminos.repaint();
 	}
-	private void darBorderApaneles() {
+	private void darBorderApaneles() {	
 		vista.getPanelTerminos().setBorder(null);
 	    vista.getPanelTerminos().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
@@ -169,6 +158,16 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	}	
+	private void darAcciones() {
+		vista.getButtonAgregar().addActionListener(e -> {if (gradoActual < 20) armarPolinomio(++gradoActual); });// Límite arbitrario
+	    vista.getButtonQuitar().addActionListener(e -> { if (gradoActual > 0) armarPolinomio(--gradoActual); });
+	    vista.getComboMetodo().addItemListener(e -> controlSelecMetodo());
+	    vista.getButtonDivir().addActionListener(e-> controlarDividir());
+	    vista.getButtonCalcularNewton().addActionListener(e-> controlarNewton());
+	    vista.getButtonDetRaices().addActionListener(e -> determinarRaices());
+	    vista.getButtonCotas().addActionListener(e -> determinarCotas());
+	    vista.getButtonRaicesBairstow().addActionListener(e -> determinarRaicesBairstow());
 	}
 	
 	public boolean esInteger(String entrada) {
@@ -366,18 +365,6 @@ public class PoliCalcViewController extends JFrame{
 		vista.getTextEnteras().setText(raices[0]);
 		vista.getTextRacionales().setText(raices[1]);
 	}
-	public void determinarCotas() {
-		if(!validarCoeficientesPolinomio()) {
-			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}
-		if(controloCoeficientePrincipal()) {
-			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}
-		
-		System.out.println("Determino las cosas...");
-	}
 	public void determinarRaicesBairstow() {
 		String raicesStr, raices[];
 		if(!validarCoeficientesPolinomio()) {
@@ -428,5 +415,17 @@ public class PoliCalcViewController extends JFrame{
 		raices = raicesStr.split(";");
 		vista.getTextReales().setText(raices[0]);
 		vista.getTextImaginarias().setText(raices[1]);
+	}
+	public void determinarCotas() {
+		if(!validarCoeficientesPolinomio()) {
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(controloCoeficientePrincipal()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
+		System.out.println("Determino las cosas...");
 	}
 }
