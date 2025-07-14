@@ -246,8 +246,6 @@ public class Polinomio {
 				imaginarias.add((double) 0);
 			}
 		}
-
-		System.out.println("reales: "+reales+"\t imaginarias: "+imaginarias);
 		return reales.toString() + ";" + imaginarias.toString();
 	}
 	

@@ -379,7 +379,7 @@ public class PoliCalcViewController extends JFrame{
 		System.out.println("Determino las cosas...");
 	}
 	public void determinarRaicesBairstow() {
-		String raices;
+		String raicesStr, raices[];
 		if(!validarCoeficientesPolinomio()) {
 			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 			return;
@@ -423,7 +423,10 @@ public class PoliCalcViewController extends JFrame{
 		    return;
 		}
 		
-		raices = this.polinomioController.detRaicesReales(Double.parseDouble(vista.getTextEpsilonBairstow().getText()),Double.parseDouble(vista.getTextR().getText()),Double.parseDouble(vista.getTextS().getText()),Integer.parseInt(vista.getTextMaxIter().getText()));
-		System.out.println("raices: " + raices);
+		raicesStr = this.polinomioController.detRaicesReales(Double.parseDouble(vista.getTextEpsilonBairstow().getText()),Double.parseDouble(vista.getTextR().getText()),Double.parseDouble(vista.getTextS().getText()),Integer.parseInt(vista.getTextMaxIter().getText()));
+
+		raices = raicesStr.split(";");
+		vista.getTextReales().setText(raices[0]);
+		vista.getTextImaginarias().setText(raices[1]);
 	}
 }

@@ -136,8 +136,6 @@ public class PolinomioController {
 	}
 	
 	public String determinarRaices() {
-		//hace que su atributo polinomio calcula las raices de todo
-		//debo tener los get de las 3 tipos de raices
 
 		int n = this.polinomio.getCoeficientes().size();
 		String raicesEnteras 	= "",
