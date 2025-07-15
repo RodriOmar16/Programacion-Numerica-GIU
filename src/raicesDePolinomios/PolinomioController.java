@@ -6,6 +6,10 @@ import java.util.List;
 
 public class PolinomioController {
 	private Polinomio polinomio;
+	private String errorCotaSupPos="", 
+			       errorCotaInfPos="", 
+			       errorCotaInfNeg="", 
+			       errorCotaSupNeg="";
 	
 	public PolinomioController() {
 		polinomio = new Polinomio();
@@ -13,6 +17,17 @@ public class PolinomioController {
 	
 	public void asignarPolinomio(List<Double> poli) {
 		polinomio.setCoeficientes((ArrayList<Double>) poli);
+	}
+	
+	public String getErrorCotaSupPos() { return this.errorCotaSupPos; }
+	public String getErrorCotaInfPos() { return this.errorCotaInfPos; }
+	public String getErrorCotaSupNeg() { return this.errorCotaSupNeg; }
+	public String getErrorCotaInfNeg() { return this.errorCotaInfNeg; }
+	public void setErrores() {
+		errorCotaSupPos="";
+		errorCotaInfPos="";
+		errorCotaInfNeg=""; 
+		errorCotaSupNeg="";
 	}
 	
 	public String divisionSintetica(double a) {
@@ -62,33 +77,33 @@ public class PolinomioController {
 			n = c.size(),
 			e = (n-1) - a;
 		for(i=(n-1); i>=a ;i--){
-			if(/*c[i]*/c.get(i) >= 0){
+			if(c.get(i) >= 0){
                 if(i!=(n-1)){
                     cad += "+";
                 }
             }
             if(e==0){
-                cad = cad + " "+ /*c[i]*/c.get(i);
+                cad = cad + " "+c.get(i);
             }else{
                 if(e==1){
-                    if(/*c[i]*/c.get(i) == 1){
+                    if(c.get(i) == 1){
                         cad += " x ";
                     }else{
-                        if(/*c[i]*/c.get(i) == -1){
+                        if(c.get(i) == -1){
                             cad += "- x ";
                         }
                         else {
-                          cad = cad + " " + /*c[i]*/c.get(i) + "x ";
+                          cad = cad + " " +c.get(i) + "x ";
                         }
                     }
                 }else{
-                    if(/*c[i]*/c.get(i) == 1){
+                    if(c.get(i) == 1){
                         cad += " x^"+e+" ";
                     }else{
-                        if(/*c[i]*/c.get(i) == -1){
+                        if(c.get(i) == -1){
                             cad += "- x^"+e+" ";
                         }
-                        else cad = cad +" "+ /*c[i]*/c.get(i) + "x^"+e+" ";
+                        else cad = cad +" "+c.get(i) + "x^"+e+" ";
                     }
                 }
             }
@@ -174,7 +189,6 @@ public class PolinomioController {
 		while( i<n && this.polinomio.getCoeficientes().get(i)>=0 ) {
 			i++;
 		}
-		
 		return (i<n);
 	}
 
@@ -191,7 +205,6 @@ public class PolinomioController {
 		
 		return  max;
 	}
-	
 	private int primerNegativo(ArrayList<Double> cx) {
 		int i = 0,
 		    n = cx.size();
@@ -204,7 +217,7 @@ public class PolinomioController {
 		}else return -1;
 	}
 	private double lagrange(ArrayList<Double> a) {
-		int n = a.size(), k;
+		int k;
 		double cotas = 0,
 			   a0    = a.get(0), 
 			   m     = maxNegativo(a), 
@@ -220,81 +233,83 @@ public class PolinomioController {
 		return cotas;
 	}
 	
-	/*private double laguerre(double cota, double[] a, int n) {	
-		int j=0;
-    	double c[] = new double[n], x = 0, anterior = cota;  	
+	private double laguerre(ArrayList<Double> p, double cotaInicial){
+		ArrayList<Double> c = new ArrayList<Double>();
+		int i,
+			n = p.size();
+    	double x = 0;  	
     	
     	boolean neg = false;
-    	while(!neg && j < 10000) {
-    		int i = n-2;
-    		c[n-1] = a[n-1];
-    		while(i >= 0 && !neg) {
-        		x = cota*c[i+1] + a[i];      		
+    		i = 1;
+    		c.add(p.get(0));
+    		while(i < n && !neg) {
+    			x = cotaInicial*c.get(i-1) + p.get(i); 
         		if(x <= 0) {
         			neg = true;
         		}
-        		c[i] = x;
-        		i--;
+        		c.add(x);
+        		i++;
         	}
-        	
-        	if(i < 0) {
-        		anterior = cota;
-        	}
-    		cota -= 0.01; //refinas
-        	j++;
-    	}
-    	return anterior;
+    		if(neg) {
+    			return -1;
+    		}else return cotaInicial;
+	}
+	private double laguerrePrincipal(ArrayList<Double> p, double cotaInicial, boolean refinar) {
+		if(!refinar) {
+			return laguerre(p, cotaInicial);
+		}else {
+			double cota = laguerre(p, cotaInicial);
+			if(cota == -1) {
+				return laguerrePrincipal(p, cotaInicial+0.1, refinar);
+			}else return cota;
+		}
 	}
 	
-	private double newton(double cota, double[] a, int n) {	
-		int j = n-1, i, m = n, t= 0, max = 1000;
-    	double aux[] = new double[n], c[] = new double[n], x = 0, anterior = 0;  	
-    	boolean parar = false, refinar = true;
+	private double newton(ArrayList<Double> p, double cotaInicial) {	
+		int n;
+    	double res;  
+    	ArrayList<Double> aux = new ArrayList<Double>(),
+    					  c   = new ArrayList<Double>(); 
+    	boolean parar = false, error = false;
+    	Horner horner = new Horner();
     	
-    	for(i = n-1 ; i>=0 ; i--){
-    		aux[i] = a[i];
-    	}
-    	   	
-    	while(refinar && t < max) {
-    		while(!parar && n!=0) {
-        		x = evaluarPolinomio(aux, n, cota);
-        		if(x <= 0) {
-        			parar = true;
-        		}else {
-        	    	//Guarda copia de aux
-        			for(i = n-1 ; i>=0 ; i--){
-        	    		c[i] = aux[i];
-        	    	}
-        			//deriva a vez
-        			for(i = n-1; i>=0 ;i--) {
-            			if(i != 0) {
-            				j = i-1;
-            				aux[j] = c[i] * i;
-            			}
-                	}
-        			//decrementa la cantidad (grado-1)
-            		n--;
-        		}
-    		}
-    		//System.out.println("refinar: "+refinar+"\tcota: "+cota+"\tparar: "+parar);
-    		if(parar) {
-    			refinar = false;
+    	c.addAll(p);
+    	while(!parar) {
+    		horner.setCoeficientes(c);
+    		res = horner.evaluarPolinomio(cotaInicial);
+    		if(res <= 0) {
+    			parar = true;
+    			error = true;
     		}else {
-    			anterior = cota;
-        		parar = false;
-        		n = m;
-        		for(i = n-1 ; i>=0 ; i--){
-            		aux[i] = a[i];
-            	}
-        		cota -= 0.01; //refinas
+    			n = c.size();
+    			if(n > 1) {
+    				//aux = derivada de C;
+        			aux.clear();
+        			for(int i=0; i<n ;i++) {
+        				if(i != n-1) aux.add(c.get(i) * (n-i-1));
+        			}
+        			c.clear();
+        			c.addAll(aux);
+    			}else {
+    				parar = true;
+    				error = false;
+    			}
     		}
-    		t++;
     	}
-    	if(t >= max) {
-			System.out.println("Superó la cantidad máximas de iteraciones.!!!");
+    	if(!error) return cotaInicial;
+    	else return -1;
+	}
+	private double newtonPrincipal(ArrayList<Double> p, double cotaInicial, boolean refinar) {
+		if(!refinar) {
+			return newton(p, cotaInicial);
+		}else {
+			double cota = newton(p, cotaInicial);
+			if(cota == -1) {
+				return newtonPrincipal(p, cotaInicial+0.1, refinar);
+			}else return cota;
 		}
-    	return anterior;
-	}*/
+	}
+	
 	private ArrayList<Double> detExpresionCotaInfPos(int n){
 		ArrayList<Double> aux = new ArrayList<Double>();
 		for(int i=n-1; i>=0 ;i--) {
@@ -335,64 +350,46 @@ public class PolinomioController {
 				auxExp = detExpresionCotaInfNeg(n);
 				break;
 		}
+		
 		//Si el coeficiente principal es negativo multiplico por -1
 		if(auxExp.get(0) < 0) {
 			for(int i=0; i<n ;i++) {
 				auxExp.set(i, -1*auxExp.get(i) );
 			}
-			
 		}
 		
 		return auxExp;
 	}
 	
-	/*public String detCotas(int metodo) {
-		double cotas[] 				  = new double[4],
-				expresionCotaSupPos[] = detExpresionCostas(0),
-				expresionCotaInfPos[] = detExpresionCostas(1), 
-				expresionCotaSupNeg[] = detExpresionCostas(2), 
-				expresionCotaInfNeg[] = detExpresionCostas(3);
-		ArrayList<Double> cotas = new ArrayList<Double>(),
-		        		  expresionCotaInfPos = detExpresionCostas(1),
-        				  expresionCotaSupNeg = detExpresionCostas(2),
-						  expresionCotaInfNeg = detExpresionCostas(3);
-		System.out.println("Sup Pos:_" + this.polinomio.getCoeficientes());
-		System.out.println("Inf Pos:_" + expresionCotaInfPos);
-		System.out.println("Sup Neg:_" + expresionCotaSupNeg);
-		System.out.println("Inf Neg:_" + expresionCotaInfNeg);
-		
-		/*cotas[3] = lagrange(expresionCotaSupPos);
-		cotas[2] = lagrange(expresionCotaInfPos); 
-		cotas[1] = lagrange(expresionCotaSupNeg); 
-		cotas[0] = lagrange(expresionCotaInfNeg);
-		cotas.add(lagrange(expresionCotaInfNeg));
-		cotas.add(lagrange(expresionCotaSupNeg));
-		cotas.add(lagrange(expresionCotaInfPos));
-		cotas.add(lagrange(this.polinomio.getCoeficientes()));
-		
-		/*cotas[2] = 1/cotas[2]; //t < cota => 1/t > 1/cota => 1/cota < x
-		cotas[1] = (-1) * (1/cotas[1]);// t < cota => 1/t > 1/cota => -1/t < -1/cota => x < -1/cota
-		cotas[0] *= -1;//  t < cota => -t > -cota => -cota < x
-		cotas.set(2, 1/cotas.get(2));
-		cotas.set(1, -1 * (1/cotas.get(1)));
-		cotas.set(0, -1 * cotas.get(0));
-		
-		
-		return cotas.get(0) +";"+cotas.get(1)+";"+cotas.get(2)+";"+cotas.get(3);
-	}*/
 	public String detCotas(int metodo, double valInicial, boolean refinar) {
 		
 		ArrayList<Double> cotas = new ArrayList<Double>(),
       		  			  expresionCotaInfPos = detExpresionCostas(1),
       		  			  expresionCotaSupNeg = detExpresionCostas(2),
       		  			  expresionCotaInfNeg = detExpresionCostas(3);
-		
+		double cotaInfNeg, cotaSupNeg, cotaInfPos, cotaSupPos;
 		switch(metodo) {
 			case 1 -> {
+				cotaInfNeg = newtonPrincipal(expresionCotaInfNeg, valInicial, refinar);
+				cotaSupNeg = newtonPrincipal(expresionCotaSupNeg, valInicial, refinar);
+				cotaInfPos = newtonPrincipal(expresionCotaInfPos, valInicial, refinar);
+				cotaSupPos = newtonPrincipal(this.polinomio.getCoeficientes(), valInicial, refinar);
 				
+				cotas.add(cotaInfNeg >=0 ? cotaInfNeg : -1);
+				cotas.add(cotaSupNeg >=0 ? cotaSupNeg : -1);
+				cotas.add(cotaInfPos >=0 ? cotaInfPos : -1);
+				cotas.add(cotaSupPos >=0 ? cotaSupPos : -1);
 			}
 			case 2 -> {
+				cotaInfNeg = laguerrePrincipal(expresionCotaInfNeg, valInicial, refinar);
+				cotaSupNeg = laguerrePrincipal(expresionCotaSupNeg, valInicial, refinar);
+				cotaInfPos = laguerrePrincipal(expresionCotaInfPos, valInicial, refinar);
+				cotaSupPos = laguerrePrincipal(this.polinomio.getCoeficientes(), valInicial, refinar);
 				
+				cotas.add(cotaInfNeg >=0 ? cotaInfNeg : -1);
+				cotas.add(cotaSupNeg >=0 ? cotaSupNeg : -1);
+				cotas.add(cotaInfPos >=0 ? cotaInfPos : -1);
+				cotas.add(cotaSupPos >=0 ? cotaSupPos : -1);
 			}
 			case 3 -> {
 				cotas.add(lagrange(expresionCotaInfNeg));
@@ -401,9 +398,17 @@ public class PolinomioController {
 				cotas.add(lagrange(this.polinomio.getCoeficientes()));
 			}
 		}
-		cotas.set(2, 1/cotas.get(2));
-		cotas.set(1, -1 * (1/cotas.get(1)));
-		cotas.set(0, -1 * cotas.get(0));
+		if(cotas.get(3) == -1) this.errorCotaSupPos = "El valor inicial no cumple las condiciones.";
+		
+		if(cotas.get(2) != -1) { cotas.set(2, 1/cotas.get(2)); }
+		else this.errorCotaInfPos = "El valor inicial no cumple las condiciones.";
+		
+		if(cotas.get(1) != -1) { cotas.set(1, -1 * (1/cotas.get(1))); }
+		else this.errorCotaSupNeg = "El valor inicial no cumple las condiciones.";
+		
+		if(cotas.get(0) != -1) { cotas.set(0, -1 * cotas.get(0)); }
+		else this.errorCotaInfNeg = "El valor inicial no cumple las condiciones.";
+		
 		return cotas.get(0) +";"+cotas.get(1)+";"+cotas.get(2)+";"+cotas.get(3);
 	}
 }

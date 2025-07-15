@@ -485,11 +485,10 @@ public class PoliCalcViewController extends JFrame{
 		}
 		
 		cotas = cotasStr.split(";");
-		vista.getTextCotaInfNeg().setText(cotas[0]);
-		vista.getTextCotaSupNeg().setText(cotas[1]);
-		vista.getTextCotaInfPos().setText(cotas[2]);
-		vista.getTextCotaSupPos().setText(cotas[3]);
-		
-		System.out.println("Determino las cosas...");
+		vista.getTextCotaInfNeg().setText(this.polinomioController.getErrorCotaInfNeg().isEmpty()? cotas[0] : this.polinomioController.getErrorCotaInfNeg());
+		vista.getTextCotaSupNeg().setText(this.polinomioController.getErrorCotaSupNeg().isEmpty()? cotas[1] : this.polinomioController.getErrorCotaInfNeg());
+		vista.getTextCotaInfPos().setText(this.polinomioController.getErrorCotaInfPos().isEmpty()? cotas[2] : this.polinomioController.getErrorCotaInfNeg());
+		vista.getTextCotaSupPos().setText(this.polinomioController.getErrorCotaSupPos().isEmpty()? cotas[3] : this.polinomioController.getErrorCotaInfNeg());
+		this.polinomioController.setErrores();
 	}
 }
