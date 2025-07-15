@@ -1,6 +1,7 @@
 package raicesDePolinomios;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Polinomio {
 	//Atributos
@@ -151,16 +152,25 @@ public class Polinomio {
 		
 		return raices.toString().length() > 0 ? raices.toString() : "No admite raices enteras.";
 	}
+	private String redondearDouble(ArrayList<Double> raices) {
+		String str ="[";
+		int n = raices.size();
+		for(int i=0; i<n ;i++) {
+			str += String.format(Locale.US, "%.4f", raices.get(i));
+			if(i<(n-1)) {
+				str += ", ";
+			}
+		}
+		return str + "]";
+	}
 	private double[][] formulaCuadratica(double b, double c) {
 		double a = 1, disc = b*b - 4*a*c, xr[][] = new double[2][2];
 		
 		if(disc>=0) {
-			System.out.println("\nentroo if..."+"\t a: "+a+"\t b: "+b+"\t c: "+c+"\n");
 			//parte reales							//parte imaginaria
 			xr[0][0] = (-b + Math.sqrt(disc))/2; 	xr[0][1] = 0;
 			xr[1][0] = (-b - Math.sqrt(disc))/2; 	xr[1][1] = 0;
 		}else {
-			System.out.println("\nentroo else..."+"\t a: "+a+"\t b: "+b+"\t c: "+c+"\n");
 			//parte reales  	//imaginarias
 			xr[0][0] = b/2; 	xr[0][1] = (Math.sqrt(Math.abs(disc)))/2;
 			xr[1][0] = b/2; 	xr[1][1] = -1*xr[0][1];
@@ -169,8 +179,7 @@ public class Polinomio {
 		return xr;
 	}
 	public String bairstow(double epsilon, double r, double s, int maxIter) {
-		int n     = this.coeficientes.size(),
-			//tamC, tamB,
+		int n    = this.coeficientes.size(),
 			g    = n-1,
 			iter = 0;
 		
@@ -188,12 +197,10 @@ public class Polinomio {
 		
 		//crea una copia editable del coef P(x) original
 		p.addAll(this.coeficientes);
-		System.out.println("p copia de coef: "+ p);
 		horner = new Horner();
 		
 		while(g>2 && iter<=maxIter) {
 			iter = 0; errorR=1; errorS=1;
-			System.out.println("en el while, antes del do-while, iter: "+iter);
 			do {
 				iter++;
 				
@@ -246,9 +253,8 @@ public class Polinomio {
 				imaginarias.add((double) 0);
 			}
 		}
-		return reales.toString() + ";" + imaginarias.toString();
+		return redondearDouble(reales) + ";" + redondearDouble(imaginarias);
 	}
-	
 	public String detRaicesReales(double epsilon, double r, double s, int maxIter) {
 		return bairstow(epsilon, r,s, maxIter);
 	}

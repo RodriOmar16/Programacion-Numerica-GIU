@@ -250,6 +250,8 @@ public class PoliCalcViewController extends JFrame{
 		this.polinomioController.asignarPolinomio(coeficientes);
 		return ( coeficientes.get(0) == 0 );
 	}
+	
+	//Horner
 	public void controlarDividir() {		
 		String resultado = "", aux[];
 		
@@ -321,6 +323,8 @@ public class PoliCalcViewController extends JFrame{
 		vista.getTextCociente().setText(aux[0]);
 		vista.getTextResto().setText(aux[1]);
 	}
+	
+	//Newton
 	public void controlarNewton() {
 		String resultado;
 		if(!validarCoeficientesPolinomio()) {
@@ -351,6 +355,8 @@ public class PoliCalcViewController extends JFrame{
 		resultado = polinomioController.aproximarRaices(Double.parseDouble(vista.getTextEpsilon().getText()), Double.parseDouble(vista.getTextValorInicial().getText()));
 		vista.getTextResultado().setText(resultado);
 	}
+	
+	//Det Raices
 	public void determinarRaices() {
 		if(!validarCoeficientesPolinomio()) {
 			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -366,6 +372,8 @@ public class PoliCalcViewController extends JFrame{
 		vista.getTextEnteras().setText(raices[0]);
 		vista.getTextRacionales().setText(raices[1]);
 	}
+	
+	//Bairstow
 	public void determinarRaicesBairstow() {
 		String raicesStr, raices[];
 		if(!validarCoeficientesPolinomio()) {
@@ -417,11 +425,17 @@ public class PoliCalcViewController extends JFrame{
 		vista.getTextReales().setText(raices[0]);
 		vista.getTextImaginarias().setText(raices[1]);
 	}
+	
+	//Cotas
 	public void controlSelecMetodoCotas() {
 		int metodo = vista.getComboMetodoCotas().getSelectedIndex(); 
 		if(metodo == 3) {
 			vista.getTextValorInicialCotas().setEnabled(false);
-		}else vista.getTextValorInicialCotas().setEnabled(true);
+			vista.getCheckRefinar().setEnabled(false);
+		}else { 
+			vista.getTextValorInicialCotas().setEnabled(true);
+			vista.getCheckRefinar().setEnabled(true);
+		}
 	}
 	private boolean coefPrincipalPos(){
 		return this.polinomioController.coefPrincipalPos();
@@ -466,11 +480,15 @@ public class PoliCalcViewController extends JFrame{
 					JOptionPane.showMessageDialog(null, "Para aplicar el método de Lagrange el polinomio debe tener al menos un término negativo.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
-				cotasStr = this.polinomioController.detCotas(metodo);
+				cotasStr = this.polinomioController.detCotas(metodo, 0, false);
 			}
 		}
 		
 		cotas = cotasStr.split(";");
+		vista.getTextCotaInfNeg().setText(cotas[0]);
+		vista.getTextCotaSupNeg().setText(cotas[1]);
+		vista.getTextCotaInfPos().setText(cotas[2]);
+		vista.getTextCotaSupPos().setText(cotas[3]);
 		
 		System.out.println("Determino las cosas...");
 	}
