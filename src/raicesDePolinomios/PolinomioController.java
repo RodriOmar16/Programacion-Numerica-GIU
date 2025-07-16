@@ -183,10 +183,13 @@ public class PolinomioController {
 		return (this.polinomio.getCoeficientes().get(0) > 0);
 	}
 	public boolean detAlMenosUnNeg() {
-		int n = this.polinomio.getCoeficientes().size(),
+		return detAlMenosUnNeg(this.polinomio.getCoeficientes());
+	}
+	private boolean detAlMenosUnNeg(ArrayList<Double> coef) {
+		int n = coef.size(),
 			i = 0;
 		
-		while( i<n && this.polinomio.getCoeficientes().get(i)>=0 ) {
+		while( i<n && coef.get(i)>=0 ) {
 			i++;
 		}
 		return (i<n);
@@ -217,6 +220,7 @@ public class PolinomioController {
 		}else return -1;
 	}
 	private double lagrange(ArrayList<Double> a) {
+		if(!detAlMenosUnNeg(a)) { return -1; }
 		int k;
 		double cotas = 0,
 			   a0    = a.get(0), 
@@ -369,16 +373,11 @@ public class PolinomioController {
       		  			  expresionCotaInfNeg = detExpresionCostas(3);
 		double cotaInfNeg, cotaSupNeg, cotaInfPos, cotaSupPos;
 		switch(metodo) {
-			case 1 -> {
+			case 1 -> {	
 				cotaInfNeg = newtonPrincipal(expresionCotaInfNeg, valInicial, refinar);
 				cotaSupNeg = newtonPrincipal(expresionCotaSupNeg, valInicial, refinar);
 				cotaInfPos = newtonPrincipal(expresionCotaInfPos, valInicial, refinar);
 				cotaSupPos = newtonPrincipal(this.polinomio.getCoeficientes(), valInicial, refinar);
-				
-				cotas.add(cotaInfNeg >=0 ? cotaInfNeg : -1);
-				cotas.add(cotaSupNeg >=0 ? cotaSupNeg : -1);
-				cotas.add(cotaInfPos >=0 ? cotaInfPos : -1);
-				cotas.add(cotaSupPos >=0 ? cotaSupPos : -1);
 			}
 			case 2 -> {
 				cotaInfNeg = laguerrePrincipal(expresionCotaInfNeg, valInicial, refinar);
@@ -386,18 +385,19 @@ public class PolinomioController {
 				cotaInfPos = laguerrePrincipal(expresionCotaInfPos, valInicial, refinar);
 				cotaSupPos = laguerrePrincipal(this.polinomio.getCoeficientes(), valInicial, refinar);
 				
-				cotas.add(cotaInfNeg >=0 ? cotaInfNeg : -1);
-				cotas.add(cotaSupNeg >=0 ? cotaSupNeg : -1);
-				cotas.add(cotaInfPos >=0 ? cotaInfPos : -1);
-				cotas.add(cotaSupPos >=0 ? cotaSupPos : -1);
 			}
-			case 3 -> {
-				cotas.add(lagrange(expresionCotaInfNeg));
-				cotas.add(lagrange(expresionCotaSupNeg));
-				cotas.add(lagrange(expresionCotaInfPos));
-				cotas.add(lagrange(this.polinomio.getCoeficientes()));
+			default -> {
+				cotaInfNeg = lagrange(expresionCotaInfNeg);
+				cotaSupNeg = lagrange(expresionCotaSupNeg);
+				cotaInfPos = lagrange(expresionCotaInfPos);
+				cotaSupPos = lagrange(this.polinomio.getCoeficientes());
 			}
 		}
+		cotas.add(cotaInfNeg >=0 ? cotaInfNeg : -1);
+		cotas.add(cotaSupNeg >=0 ? cotaSupNeg : -1);
+		cotas.add(cotaInfPos >=0 ? cotaInfPos : -1);
+		cotas.add(cotaSupPos >=0 ? cotaSupPos : -1);
+		
 		if(cotas.get(3) == -1) this.errorCotaSupPos = "El valor inicial no cumple las condiciones.";
 		
 		if(cotas.get(2) != -1) { cotas.set(2, 1/cotas.get(2)); }
