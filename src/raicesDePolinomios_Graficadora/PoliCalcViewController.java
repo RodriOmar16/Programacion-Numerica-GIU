@@ -42,16 +42,28 @@ public class PoliCalcViewController extends JFrame{
 	    ));
 	    boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
+	private void darIconoBoton(JButton boton, String src) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(src));
+		boton.setIcon(icon);
+		boton.setBorderPainted(false);
+		boton.setFocusPainted(false);
+		boton.setContentAreaFilled(false);
+	}
 	public void darEstilos() {
-		//
+		//colores
 		estilizarBoton(vista.getButtonGraficar());
-		estilizarBoton(vista.getButtonAgregar());
-		estilizarBoton(vista.getButtonQuitar());
+		//estilizarBoton(vista.getButtonAgregar());
+		//estilizarBoton(vista.getButtonQuitar());
 		estilizarBoton(vista.getButtonDividir());
 		estilizarBoton(vista.getButtonCalcularNewton());
 		estilizarBoton(vista.getButtonDetRaices());
 		estilizarBoton(vista.getButtonRaicesBairstow());
 		estilizarBoton(vista.getButtonCotas());
+		
+		//iconos
+		//new ImageIcon(getClass().getResource("/img/dos-flechas.png")
+		darIconoBoton(vista.getButtonAgregar(), "/img/mas.png");
+		darIconoBoton(vista.getButtonQuitar(), "/img/signo-menos.png");
 	}
 	private void iniciarVistaControlada() {
 		// Crear el panel interno dinámico

@@ -1,7 +1,14 @@
 package raicesDePolinomios_Graficadora;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+
 public class PoliCalcView extends javax.swing.JFrame {
     public PoliCalcView() {
+    	estilosGenerales();
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
@@ -150,11 +157,11 @@ public class PoliCalcView extends javax.swing.JFrame {
 
         labelPolinomios.setText("Términos:");
 
-        buttonAgregarTerminos.setText("Agregar");
+        //buttonAgregarTerminos.setText();
 
-        buttonQuitarTerminos.setText("Quitar");
+        //buttonQuitarTerminos.setText();
 
-        javax.swing.GroupLayout panelTerminosLayout = new javax.swing.GroupLayout(panelTerminos);
+        /*javax.swing.GroupLayout panelTerminosLayout = new javax.swing.GroupLayout(panelTerminos);
         panelTerminos.setLayout(panelTerminosLayout);
         panelTerminosLayout.setHorizontalGroup(
             panelTerminosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,6 +188,46 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addComponent(buttonQuitarTerminos)
                 .addGap(62, 62, 62))
+        );
+        panelPolinomioLayout.setVerticalGroup(
+            panelPolinomioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPolinomioLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(panelPolinomioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPolinomios)
+                    .addComponent(buttonAgregarTerminos)
+                    .addComponent(buttonQuitarTerminos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelTerminos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );*/
+        javax.swing.GroupLayout panelTerminosLayout = new javax.swing.GroupLayout(panelTerminos);
+        panelTerminos.setLayout(panelTerminosLayout);
+        panelTerminosLayout.setHorizontalGroup(
+            panelTerminosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelTerminosLayout.setVerticalGroup(
+            panelTerminosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelPolinomioLayout = new javax.swing.GroupLayout(panelPolinomio);
+        panelPolinomio.setLayout(panelPolinomioLayout);
+        panelPolinomioLayout.setHorizontalGroup(
+            panelPolinomioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPolinomioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelTerminos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPolinomioLayout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addComponent(labelPolinomios)
+                .addGap(188, 188, 188)
+                .addComponent(buttonAgregarTerminos, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonQuitarTerminos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         panelPolinomioLayout.setVerticalGroup(
             panelPolinomioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,6 +670,13 @@ public class PoliCalcView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                                                              
 
+    private void estilosGenerales() {
+		UIManager.put("ToolTip.background", Color.WHITE);            // Fondo blanco
+		UIManager.put("ToolTip.foreground", Color.BLACK);            // Texto negro
+		UIManager.put("ToolTip.border", BorderFactory.createLineBorder(Color.GRAY)); // Borde gris fino
+		UIManager.put("ToolTip.font", new Font("SansSerif", Font.PLAIN, 12)); // Fuente limpia
+	}
+    
   //Botones
     public javax.swing.JButton getButtonAgregar() { return buttonAgregarTerminos; }
     public javax.swing.JButton getButtonQuitar() { return buttonQuitarTerminos; }
