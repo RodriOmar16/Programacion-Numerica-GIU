@@ -84,7 +84,7 @@ public class PoliCalcView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1125, 732));
 
-        panelPrincipal.setPreferredSize(new java.awt.Dimension(1200, 720));
+        panelPrincipal.setPreferredSize(new java.awt.Dimension(1125, 720));
 
         panelGraficar.setPreferredSize(new java.awt.Dimension(600, 680));
 
@@ -105,14 +105,14 @@ public class PoliCalcView extends javax.swing.JFrame {
         panelGraficar.setLayout(panelGraficarLayout);
         panelGraficarLayout.setHorizontalGroup(
             panelGraficarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGraficarLayout.createSequentialGroup()
+                    .addContainerGap(266, Short.MAX_VALUE)
+                    .addComponent(buttonGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(240, 240, 240))
             .addGroup(panelGraficarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGraficarLayout.createSequentialGroup()
-                .addContainerGap(266, Short.MAX_VALUE)
-                .addComponent(buttonGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(240, 240, 240))
         );
         panelGraficarLayout.setVerticalGroup(
             panelGraficarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,39 +123,6 @@ public class PoliCalcView extends javax.swing.JFrame {
                 .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        /*javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
-        panelGrafico.setLayout(panelGraficoLayout);
-        panelGraficoLayout.setHorizontalGroup(
-            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelGraficoLayout.setVerticalGroup(
-            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout panelGraficarLayout = new javax.swing.GroupLayout(panelGraficar);
-        panelGraficar.setLayout(panelGraficarLayout);
-        panelGraficarLayout.setHorizontalGroup(
-            panelGraficarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGraficarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGraficarLayout.createSequentialGroup()
-                .addContainerGap(270, Short.MAX_VALUE)
-                .addComponent(buttonGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(242, 242, 242))
-        );
-        panelGraficarLayout.setVerticalGroup(
-            panelGraficarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGraficarLayout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addComponent(buttonGraficar)
-                .addGap(47, 47, 47)
-                .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );*/
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelTitulo.setText("Calculadora de Polinomios");

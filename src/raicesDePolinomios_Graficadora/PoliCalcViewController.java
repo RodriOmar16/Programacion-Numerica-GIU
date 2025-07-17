@@ -162,18 +162,39 @@ public class PoliCalcViewController extends JFrame{
 		grafico = new GraficadorPanel(coef);
 		grafico.setRaices(raices);
 		grafico.setVisible(true);
+		grafico.setPreferredSize(new Dimension(500, 500));
+		grafico.setMaximumSize(new Dimension(500, 500));
+		grafico.setMinimumSize(new Dimension(500, 500));
+
 		
 		vista.getPanelGrafico().setLayout(new BorderLayout());
-		vista.getPanelGrafico().add(grafico, BorderLayout.CENTER);		
-		vista.getPanelGrafico().setPreferredSize(new Dimension(500,550));
+		vista.getPanelGrafico().add(grafico, BorderLayout.CENTER);
+		vista.getPanelGrafico().setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		vista.getPanelGrafico().setPreferredSize(new Dimension(520, 510));
+		vista.getPanelGrafico().setMaximumSize(new Dimension(520, 510));
+
 		vista.getPanelGrafico().revalidate();
 	    vista.getPanelGrafico().repaint();
 	    
-	    vista.getPanelGraficar().setBorder(BorderFactory.createLineBorder(Color.CYAN));
-	    vista.getPanelGrafico().setBorder(BorderFactory.createLineBorder(Color.GREEN));
+	    //vista.getPanelGraficar().setBorder(BorderFactory.createLineBorder(Color.CYAN));
+	    vista.getPanelGrafico().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	    
-	    vista.getPanelGraficar().setBackground(Color.RED);
-//	    vista.getPanelGraficar().setLayout(new BoxLayout(vista.getPanelGraficar(), BoxLayout.Y_AXIS));
+	    //vista.getPanelGraficar().setBackground(Color.RED);
+	   // vista.getPanelGraficar().setLayout(new BoxLayout(vista.getPanelGraficar(), BoxLayout.Y_AXIS));
+	    //vista.getPanelGraficar().setPreferredSize(new Dimension(600, 600));
+	    //vista.getPanelGraficar().setMaximumSize(new Dimension(600, 600));
+	    
+	    vista.getPanelGraficar().setLayout(new BoxLayout(vista.getPanelGraficar(), BoxLayout.Y_AXIS));
+	    vista.getPanelGraficar().setPreferredSize(new Dimension(600, 580));
+	    vista.getPanelGraficar().setMaximumSize(new Dimension(600, 580));
+	    
+	    JPanel botonContenedor = new JPanel();
+	    botonContenedor.setLayout(new FlowLayout(FlowLayout.CENTER));
+	    //botonContenedor.setBorder(new EmptyBorder(10, 0, 10, 0));
+	    botonContenedor.add(vista.getButtonGraficar());
+
+	    vista.getPanelGraficar().add(botonContenedor);
+	    
 		vista.getPanelGraficar().revalidate();
 	    vista.getPanelGraficar().repaint();
 
