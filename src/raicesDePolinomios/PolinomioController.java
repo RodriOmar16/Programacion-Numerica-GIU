@@ -29,6 +29,7 @@ public class PolinomioController {
 		errorCotaInfNeg=""; 
 		errorCotaSupNeg="";
 	}
+	public Polinomio getPolinomio(){ return this.polinomio;	}
 	
 	public String divisionSintetica(double a) {
 		Horner horner = new Horner(this.polinomio.getCoeficientes());
@@ -145,6 +146,9 @@ public class PolinomioController {
 	}
 	
 	//Det Raices
+	public boolean detCeroRaiz() {
+		return this.polinomio.ceroEsRaiz();
+	}
 	private boolean detCoefEnteros() {
 		int i=0, n = this.polinomio.getCoeficientes().size();
 		while(i<n && this.polinomio.getCoeficientes().get(i)%1 == 0 ) {
@@ -153,8 +157,7 @@ public class PolinomioController {
 		return (i>=n);
 	}
 	
-	public String determinarRaices() {
-
+	public String determinarRaices() {		
 		int n = this.polinomio.getCoeficientes().size();
 		String raicesEnteras 	= "",
 			   raicesRacionales = "";
@@ -165,8 +168,10 @@ public class PolinomioController {
 			raicesRacionales = "No admite raices racionales";
 		}else {
 			if(terminoIndep == 0) {
-				raicesEnteras = "No admite raices enteras";	
-			}else raicesEnteras = this.polinomio.detRaicesEnteras();
+				raicesEnteras = "No es posible obtener las raices por este método"; 	
+			}else {
+				raicesEnteras = this.polinomio.detRaicesEnteras();
+			}
 			raicesRacionales = this.polinomio.detRaicesRacionales();
 		}
 		

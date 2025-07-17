@@ -146,7 +146,7 @@ public class PoliCalcView extends javax.swing.JFrame {
 
         scrollPaneCalculadora.setPreferredSize(new java.awt.Dimension(476, 680));
         
-        panelCalculadora.setPreferredSize(new java.awt.Dimension(460, 1072));
+        panelCalculadora.setPreferredSize(new java.awt.Dimension(464, 1110));
 
         labelPolinomios.setText("Términos:");
 
@@ -626,7 +626,7 @@ public class PoliCalcView extends javax.swing.JFrame {
   //Botones
     public javax.swing.JButton getButtonAgregar() { return buttonAgregarTerminos; }
     public javax.swing.JButton getButtonQuitar() { return buttonQuitarTerminos; }
-    public javax.swing.JButton getButtonDivir() { return buttonDividir; }
+    public javax.swing.JButton getButtonDividir() { return buttonDividir; }
     public javax.swing.JButton getButtonCalcularNewton() { return buttonCalcular; }
     public javax.swing.JButton getButtonDetRaices() { return buttonRaices; }
     public javax.swing.JButton getButtonCotas() { return buttonCotas; }

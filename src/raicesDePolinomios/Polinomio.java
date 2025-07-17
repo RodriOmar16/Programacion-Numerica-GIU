@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class Polinomio {
 	//Atributos
-	private ArrayList<Double> coeficientes, raicesEnteras, raicesRacionales, raicesReales;
+	private ArrayList<Double> coeficientes, raicesEnteras, raicesRacionales, raicesReales, raicesImaginarias;
 	
 	//Constructor
 	public Polinomio() {
@@ -13,6 +13,7 @@ public class Polinomio {
 		raicesEnteras    = new ArrayList<Double>();
 		raicesRacionales = new ArrayList<Double>();
 		raicesReales 	 = new ArrayList<Double>();
+		raicesImaginarias= new ArrayList<Double>();
 	}
 	
 	//Getters and Setters
@@ -38,6 +39,11 @@ public class Polinomio {
 	public void setRaicesReales(ArrayList<Double> reales) {
 		raicesReales.clear();
 		raicesReales.addAll(reales);
+	}
+	public ArrayList<Double> getRaicesImaginarias(){ return this.raicesImaginarias; }
+	public void setRaicesImaginarias(ArrayList<Double> imag) {
+		raicesImaginarias.clear();
+		raicesImaginarias.addAll(imag);
 	}
 	
 	//Methods
@@ -85,6 +91,19 @@ public class Polinomio {
 				return mcd(b, a%b);
 		}else return -1;
 	}
+	public boolean ceroEsRaiz() {
+		Horner horner 	            = new Horner(this.coeficientes);
+		ArrayList<Double> auxHorner = new ArrayList<Double>();
+		int tam;
+		
+		auxHorner = horner.simpleCaso1(0);
+		tam = auxHorner.size();
+		if(auxHorner.get(tam - 1) == 0) { //resto == 0
+			return true;
+		}
+		return false;
+		
+	}
 	public String detRaicesEnteras() {
 		Horner horner 	 = new Horner(this.coeficientes);
 		int    n  		 = this.coeficientes.size(), tam;
@@ -107,6 +126,13 @@ public class Polinomio {
 			if(auxHorner.get(tam - 1) == 0) { //resto == 0
 				raices.add(-1 * divisor);
 			}
+		}
+		
+		//compruebo si el cero es raíz
+		auxHorner = horner.simpleCaso1(0);
+		tam = auxHorner.size();
+		if(auxHorner.get(tam - 1) == 0) { //resto == 0
+			raices.add((double)0);
 		}
 		
 		setRaicesEnteras(raices);
@@ -253,6 +279,8 @@ public class Polinomio {
 				imaginarias.add((double) 0);
 			}
 		}
+		setRaicesReales(reales);
+		setRaicesImaginarias(imaginarias);
 		return redondearDouble(reales) + ";" + redondearDouble(imaginarias);
 	}
 	public String detRaicesReales(double epsilon, double r, double s, int maxIter) {

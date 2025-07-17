@@ -27,8 +27,31 @@ public class PoliCalcViewController extends JFrame{
 	
 	//Metodos
 	private void configurarVista() {
+		darEstilos();
 		iniciarVistaControlada();
 		darAcciones();
+	}
+	private void estilizarBoton(JButton boton) {
+	    boton.setBackground(new Color(21, 101, 192)); // azul primario
+	    boton.setForeground(Color.WHITE);             // texto blanco
+	    boton.setFocusPainted(false);
+	    boton.setFont(new Font("SansSerif", Font.BOLD, 12));
+	    boton.setBorder(BorderFactory.createCompoundBorder(
+	        BorderFactory.createLineBorder(new Color(25, 118, 210)),
+	        BorderFactory.createEmptyBorder(6, 16, 6, 16) // margen interno
+	    ));
+	    boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+	public void darEstilos() {
+		//
+		estilizarBoton(vista.getButtonGraficar());
+		estilizarBoton(vista.getButtonAgregar());
+		estilizarBoton(vista.getButtonQuitar());
+		estilizarBoton(vista.getButtonDividir());
+		estilizarBoton(vista.getButtonCalcularNewton());
+		estilizarBoton(vista.getButtonDetRaices());
+		estilizarBoton(vista.getButtonRaicesBairstow());
+		estilizarBoton(vista.getButtonCotas());
 	}
 	private void iniciarVistaControlada() {
 		// Crear el panel interno dinámico
@@ -51,7 +74,7 @@ public class PoliCalcViewController extends JFrame{
 	    armarPolinomio(2);
 	    
 	    //doy border a las secciones
-	    darBorderApaneles();
+	    darEstilosApaneles();
 	       
 	    //Crear el grafico
 	    crearGrafico();
@@ -86,8 +109,10 @@ public class PoliCalcViewController extends JFrame{
 	    panelTerminos.revalidate();
 	    panelTerminos.repaint();
 	}
-	private void darBorderApaneles() {	
-		vista.getPanelTerminos().setBorder(null);
+	private void darEstilosApaneles() {	
+		Color grisSuave = new Color(245, 245, 245);
+		
+		vista.getPanelPolinomio().setBackground(grisSuave);
 	    vista.getPanelPolinomio().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -99,6 +124,8 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+  
+	    vista.getPanelDivision().setBackground(grisSuave);
 	    vista.getPanelDivision().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -110,6 +137,8 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	    
+	    vista.getPanelNewton().setBackground(grisSuave);
 	    vista.getPanelNewton().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -121,6 +150,8 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	    
+	    vista.getPanelRaices().setBackground(grisSuave);
 	    vista.getPanelRaices().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -132,6 +163,8 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	    
+	    vista.getPanelCotas().setBackground(grisSuave);
 	    vista.getPanelCotas().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -143,6 +176,8 @@ public class PoliCalcViewController extends JFrame{
 			        Color.GRAY
 			    )
 			));
+	    
+	    vista.getPanelRaicesBairstow().setBackground(grisSuave);
 	    vista.getPanelRaicesBairstow().setBorder(BorderFactory.createCompoundBorder(
 			    new EmptyBorder(0, 0, 0, 0), // margen externo: 5px arriba
 			    BorderFactory.createTitledBorder(
@@ -172,17 +207,9 @@ public class PoliCalcViewController extends JFrame{
 		vista.getPanelGrafico().setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		vista.getPanelGrafico().setPreferredSize(new Dimension(520, 510));
 		vista.getPanelGrafico().setMaximumSize(new Dimension(520, 510));
-
+		vista.getPanelGrafico().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		vista.getPanelGrafico().revalidate();
 	    vista.getPanelGrafico().repaint();
-	    
-	    //vista.getPanelGraficar().setBorder(BorderFactory.createLineBorder(Color.CYAN));
-	    vista.getPanelGrafico().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	    
-	    //vista.getPanelGraficar().setBackground(Color.RED);
-	   // vista.getPanelGraficar().setLayout(new BoxLayout(vista.getPanelGraficar(), BoxLayout.Y_AXIS));
-	    //vista.getPanelGraficar().setPreferredSize(new Dimension(600, 600));
-	    //vista.getPanelGraficar().setMaximumSize(new Dimension(600, 600));
 	    
 	    vista.getPanelGraficar().setLayout(new BoxLayout(vista.getPanelGraficar(), BoxLayout.Y_AXIS));
 	    vista.getPanelGraficar().setPreferredSize(new Dimension(600, 580));
@@ -190,11 +217,10 @@ public class PoliCalcViewController extends JFrame{
 	    
 	    JPanel botonContenedor = new JPanel();
 	    botonContenedor.setLayout(new FlowLayout(FlowLayout.CENTER));
-	    //botonContenedor.setBorder(new EmptyBorder(10, 0, 10, 0));
+	    botonContenedor.setBorder(new EmptyBorder(15, 0, 10, 0));
 	    botonContenedor.add(vista.getButtonGraficar());
 
 	    vista.getPanelGraficar().add(botonContenedor);
-	    
 		vista.getPanelGraficar().revalidate();
 	    vista.getPanelGraficar().repaint();
 
@@ -203,12 +229,13 @@ public class PoliCalcViewController extends JFrame{
 		vista.getButtonAgregar().addActionListener(e -> {if (gradoActual < 20) armarPolinomio(++gradoActual); });// Límite arbitrario
 	    vista.getButtonQuitar().addActionListener(e -> { if (gradoActual > 0) armarPolinomio(--gradoActual); });
 	    vista.getComboMetodo().addItemListener(e -> controlSelecMetodo());
-	    vista.getButtonDivir().addActionListener(e-> controlarDividir());
+	    vista.getButtonDividir().addActionListener(e-> controlarDividir());
 	    vista.getButtonCalcularNewton().addActionListener(e-> controlarNewton());
 	    vista.getButtonDetRaices().addActionListener(e -> determinarRaices());
 	    vista.getComboMetodoCotas().addItemListener(e -> controlSelecMetodoCotas());
 	    vista.getButtonCotas().addActionListener(e -> determinarCotas());
 	    vista.getButtonRaicesBairstow().addActionListener(e -> determinarRaicesBairstow());
+	    vista.getButtonGraficar().addActionListener(e -> graficarPolinomio());
 	}
 	
 	public boolean esInteger(String entrada) {
@@ -530,5 +557,56 @@ public class PoliCalcViewController extends JFrame{
 		vista.getTextCotaInfPos().setText(this.polinomioController.getErrorCotaInfPos().isEmpty()? cotas[2] : this.polinomioController.getErrorCotaInfNeg());
 		vista.getTextCotaSupPos().setText(this.polinomioController.getErrorCotaSupPos().isEmpty()? cotas[3] : this.polinomioController.getErrorCotaInfNeg());
 		this.polinomioController.setErrores();
+	}
+	
+	//Graficar
+	private ArrayList<Double> cadenaALista(String entrada) {
+	    ArrayList<Double> lista = new ArrayList<>();
+
+	    // 1. Quitar los corchetes y espacios
+	    entrada = entrada.replace("[", "").replace("]", "").trim();
+
+	    if (entrada.isEmpty()) return lista; // cadena vacía = lista vacía
+
+	    // 2. Separar por coma
+	    String[] partes = entrada.split(",");
+
+	    // 3. Parsear cada número como double
+	    for (String parte : partes) {
+	        try {
+	            lista.add(Double.parseDouble(parte.trim()));
+	        } catch (NumberFormatException e) {
+	            // Podés ignorarlo o lanzar una excepción, según el uso
+	            System.err.println("No se pudo convertir: " + parte);
+	            JOptionPane.showMessageDialog(null, parte, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+	        }
+	    }
+
+	    return lista;
+	}
+	public void graficarPolinomio() {
+		if(!validarCoeficientesPolinomio()) {
+			JOptionPane.showMessageDialog(null, "Todos los coeficientes del polinomio deben ser números.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(controloCoeficientePrincipal()) {
+			JOptionPane.showMessageDialog(null, "Se requiere ingresar un valor para el Coef. principal del polinomio.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
+		this.grafico.setCoeficientes(this.polinomioController.getPolinomio().getCoeficientes());
+		
+		String raicesEnterasRacionales[] = this.polinomioController.determinarRaices().split(";");
+		
+		ArrayList<Double> todasRaices = new ArrayList<Double>();
+		
+		todasRaices.addAll(cadenaALista(raicesEnterasRacionales[0]));
+		todasRaices.addAll(cadenaALista(raicesEnterasRacionales[1]));
+		
+		if(polinomioController.detCeroRaiz()) {
+			todasRaices.add((double) 0);
+		}
+		
+		this.grafico.setRaices(todasRaices);
 	}
 }
